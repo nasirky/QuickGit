@@ -17,3 +17,13 @@ extension Publisher {
     }
 
 }
+
+extension AnyPublisher {
+
+    static func just(_ output: Output) -> AnyPublisher {
+        Just(output)
+        .setFailureType(to: Failure.self)
+        .eraseToAnyPublisher()
+    }
+
+}

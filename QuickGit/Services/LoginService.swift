@@ -19,9 +19,7 @@ protocol LoginService {
 class MockLoginService: LoginService {
 
     func login(username: String, password: String) -> AnyPublisher<LoginInformation, Error> {
-        Just(LoginInformation())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        .just(LoginInformation())
     }
 
 }
