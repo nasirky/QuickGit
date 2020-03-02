@@ -16,25 +16,36 @@ struct HomeView: View {
         case settings
     }
 
-    var information: LoginInformation
+    let gitHubService: GitHubService
     @State var selection = Tab.main
 
     var body: some View {
         TabView(selection: $selection) {
-            tab(ProfileView(), tab: .profile) { isSelected in
-                Image(systemName: isSelected ? "person.fill" : "person")
-                Text("Profile")
-            }
+            profileTab
+            mainTab
+            settingsTab
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
 
-            tab(MainView(), tab: .main) { isSelected in
-                Image(systemName: isSelected ? "house.fill" : "house")
-                Text("Main")
-            }
+    private var profileTab: some View {
+        tab(ProfileView(gitHubService: gitHubService), tab: .profile) { isSelected in
+            Image(systemName: isSelected ? "person.fill" : "person")
+            Text("Profile")
+        }
+    }
 
-            tab(SettingsView(), tab: .settings) { _ in
-                Image(systemName: "gear")
-                Text("Settings")
-            }
+    private var mainTab: some View {
+        tab(MainView(gitHubService: gitHubService), tab: .main) { isSelected in
+            Image(systemName: isSelected ? "house.fill" : "house")
+            Text("Main")
+        }
+    }
+
+    private var settingsTab: some View {
+        tab(SettingsView(), tab: .settings) { _ in
+            Image(systemName: "gear")
+            Text("Settings")
         }
     }
 

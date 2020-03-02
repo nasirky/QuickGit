@@ -10,11 +10,31 @@ import Combine
 import Foundation
 
 protocol GitHubService {
+    func fetchProfile() -> AnyPublisher<Profile, Error>
     func fetchRepositories() -> AnyPublisher<[Repository], Error>
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error>
 }
 
 class MockGitHubService: GitHubService {
+
+    func fetchProfile() -> AnyPublisher<Profile, Error> {
+        let profile = Profile(
+            id: 1,
+            login: "pauljohanneskraft",
+            avatarURL: "https://avatars2.githubusercontent.com/u/15239005?s=460&v=4",
+            htmlURL: "https://github.com/pauljohanneskraft",
+            name: "Paul",
+            company: "@quickbirdstudios",
+            location: "Munich, Germany",
+            email: "",
+            bio: "...",
+            followers: 19,
+            following: 13
+        )
+
+        return .just(profile)
+    }
+
     func fetchRepositories() -> AnyPublisher<[Repository], Error> {
         let repositories = [
             Repository(),

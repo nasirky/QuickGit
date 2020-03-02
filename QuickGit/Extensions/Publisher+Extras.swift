@@ -16,12 +16,23 @@ extension Publisher {
         .eraseToAnyPublisher()
     }
 
+    func ignoreFailure() -> AnyPublisher<Output, Never> {
+        `catch` { _ in Empty() }
+        .eraseToAnyPublisher()
+    }
+
 }
 
 extension AnyPublisher {
 
     static func just(_ output: Output) -> AnyPublisher {
         Just(output)
+        .setFailureType(to: Failure.self)
+        .eraseToAnyPublisher()
+    }
+
+    static func empty() -> AnyPublisher {
+        Empty()
         .setFailureType(to: Failure.self)
         .eraseToAnyPublisher()
     }

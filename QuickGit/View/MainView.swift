@@ -6,15 +6,44 @@
 //  Copyright © 2020 QuickBird Studios. All rights reserved.
 //
 
+import Combine
 import SwiftUI
+
+extension Repository: Identifiable {
+    var id: String {
+        return "TODO" // TODO!!!!!
+    }
+}
 
 struct MainView: View {
 
+    @State var repositories = [Repository]()
+    @State var cancellables = Set<AnyCancellable>()
+
+    let gitHubService: GitHubService
+
     var body: some View {
         NavigationView {
-            Text("Main")
-            .navigationBarTitle("Main")
+            List(repositories) { repository in
+                self.cell(for: repository)
+            }
+            .navigationBarTitle("Repositories")
         }
+        .onAppear(perform: reload)
+    }
+
+    private func cell(for repository: Repository) -> some View {
+        let destination = RepositoryView(gitHubService: gitHubService, repository: repository)
+        return NavigationLink(destination: destination) {
+            Text(repository.id)
+        }
+    }
+
+    private func reload() {
+        gitHubService.fetchRepositories()
+        .replaceError(with: [])
+        .assign(to: \.repositories, on: self)
+        .store(in: &cancellables)
     }
 
 }
