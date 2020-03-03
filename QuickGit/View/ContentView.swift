@@ -23,7 +23,9 @@ struct ContentView: View {
                           loginService: loginService)
             }
             loginInformation.map { information in
-                HomeView(gitHubService: MockGitHubService())
+                HomeView(loginInformation: $loginInformation,
+                         loginService: loginService,
+                         gitHubService: DefaultGitHubService(information: information))
             }
         }
         .onAppear(perform: storedLogin)

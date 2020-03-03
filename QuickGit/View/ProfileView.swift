@@ -13,6 +13,10 @@ struct ProfileView: View {
 
     @State var profile: Profile?
     @State var cancellables = Set<AnyCancellable>()
+    @State var showLogoutAlert = false
+    @Binding var loginInformation: LoginInformation?
+
+    let loginService: LoginService
     let gitHubService: GitHubService
 
     var body: some View {
@@ -25,10 +29,31 @@ struct ProfileView: View {
                     loadingView
                 }
             }
-            .navigationBarItems(trailing: openInBrowserButton)
+            .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
         }
+        .alert(isPresented: $showLogoutAlert, content: logoutAlert)
         .onAppear(perform: reload)
+    }
+
+    private func logout() {
+        self.loginService.logout()
+        self.loginInformation = nil
+    }
+
+    private func logoutAlert() -> Alert {
+        Alert(title: Text("Logout"),
+              message: Text("Do you really want to log out?"),
+              primaryButton: .destructive(Text("Yes"), action: logout),
+              secondaryButton: .default(Text("No")))
+    }
+
+    private var logoutButton: some View {
+        Button(action: { self.showLogoutAlert = true }) {
+            Image(systemName: "clear")
+            .resizable()
+            .scaledToFit()
+        }
     }
 
     private var openInBrowserButton: some View {
@@ -56,19 +81,19 @@ struct ProfileView: View {
             VStack {
                 header(for: profile)
 
-                row(image: Image(systemName: "doc.plaintext"), text: profile.bio)
+                row(image: Image(systemName: "doc.plaintext"), text: profile.bio ?? "-")
 
                 Divider()
 
-                row(image: Image(systemName: "person.2.fill"), text: profile.company)
+                row(image: Image(systemName: "person.2.fill"), text: profile.company ?? "-")
 
                 Divider()
 
-                row(image: Image(systemName: "mappin.and.ellipse"), text: profile.location)
+                row(image: Image(systemName: "mappin.and.ellipse"), text: profile.location ?? "-")
 
                 Divider()
 
-                row(image: Image(systemName: "envelope.fill"), text: profile.email)
+                row(image: Image(systemName: "envelope.fill"), text: profile.email ?? "-")
 
                 Divider()
             }
@@ -165,7 +190,7 @@ struct ProfileView: View {
     }
 
     private func loadAvatar(for profile: Profile) -> AnyPublisher<Image, Never> {
-        guard let url = URL(string: profile.avatarURL) else { return .empty() }
+        guard let url = profile.avatarURL.flatMap(URL.init(string:)) else { return .empty() }
         return URLSession.shared.dataTaskPublisher(for: url)
             .compactMap { UIImage(data: $0.data).map(Image.init) }
             .ignoreFailure()

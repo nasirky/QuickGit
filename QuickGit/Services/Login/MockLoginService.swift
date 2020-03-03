@@ -9,10 +9,6 @@
 import Combine
 import Foundation
 
-enum LoginError: Error {
-    case noStoredCredentials
-}
-
 class MockLoginService: LoginService {
 
     func storedLogin() -> AnyPublisher<LoginInformation, Error> {
@@ -21,8 +17,10 @@ class MockLoginService: LoginService {
         .eraseToAnyPublisher()
     }
 
-    func login(username: String, password: String) -> AnyPublisher<LoginInformation, Error> {
-        .just(LoginInformation())
+    func login(code: String) -> AnyPublisher<LoginInformation, Error> {
+        .just(LoginInformation(accessToken: ""))
     }
+
+    func logout() {}
 
 }

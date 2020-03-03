@@ -37,4 +37,11 @@ extension AnyPublisher {
         .eraseToAnyPublisher()
     }
 
+    static func failure(_ error: Failure) -> AnyPublisher {
+        Just(())
+        .tryMap { throw error }
+        .mapError { $0 as! Failure }
+        .eraseToAnyPublisher()
+    }
+
 }

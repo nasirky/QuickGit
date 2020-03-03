@@ -16,7 +16,11 @@ struct HomeView: View {
         case settings
     }
 
+    @Binding var loginInformation: LoginInformation?
+
+    let loginService: LoginService
     let gitHubService: GitHubService
+
     @State var selection = Tab.main
 
     var body: some View {
@@ -29,7 +33,7 @@ struct HomeView: View {
     }
 
     private var profileTab: some View {
-        tab(ProfileView(gitHubService: gitHubService), tab: .profile) { isSelected in
+        tab(ProfileView(loginInformation: $loginInformation, loginService: loginService, gitHubService: gitHubService), tab: .profile) { isSelected in
             Image(systemName: isSelected ? "person.fill" : "person")
             Text("Profile")
         }

@@ -30,13 +30,13 @@ struct Profile: Codable {
 
     var id: Int
     var login: String
-    var avatarURL: String
+    var avatarURL: String?
     var htmlURL: String
     var name: String
-    var company: String
-    var location: String
-    var email: String
-    var bio: String
+    var company: String?
+    var location: String?
+    var email: String?
+    var bio: String?
     var followers: Int
     var following: Int
 

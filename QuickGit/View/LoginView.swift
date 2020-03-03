@@ -9,51 +9,36 @@
 import Combine
 import SwiftUI
 
+let request: URLRequest = {
+    let url = URL(string: "https://github.com/login/oauth/authorize")!
+    var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+    components.queryItems = [URLQueryItem(name: "client_id", value: Configuration.clientID)]
+    return URLRequest(url: components.url!,
+                      cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+                      timeoutInterval: 10)
+}()
+
 struct LoginView: View {
 
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var error: String?
     @State var cancellables = Set<AnyCancellable>()
-
     @Binding var information: LoginInformation?
 
     let loginService: LoginService
 
     var body: some View {
-        NavigationView {
-            Form {
-                TextField("Username", text: $username)
-                SecureField("Password", text: $password)
-                Button("Login", action: login)
-            }
-            .navigationBarTitle("Login")
-        }
-        .alert(item: $error) { error in
-            Alert(title: Text(error))
-        }
-        .onAppear(perform: clear)
+        AuthenticationView(initialRequest: request,
+                           completion: login)
+        .edgesIgnoringSafeArea(.all)
     }
 
-    private func clear() {
-        username = String()
-        password = String()
-    }
+    private func login(code: String) {
+        guard information == nil else { return }
 
-    private func login() {
-        loginService
-            .login(username: username, password: password)
-            .mapResult()
-            .sink { value in
-                switch value {
-                case let .success(information):
-                    self.information = information
-                case let .failure(error):
-                    self.error = "Login failed\n\(error)"
-                }
-
-            }
-            .store(in: &cancellables)
+        loginService.login(code: code)
+        .ignoreFailure()
+        .map(Optional.some)
+        .assign(to: \.information, on: self)
+        .store(in: &cancellables)
     }
 
 }

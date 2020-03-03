@@ -9,10 +9,6 @@
 import Combine
 import Foundation
 
-enum Constants {
-    static let baseURL = URL(string: "https://api.github.com")!
-}
-
 class DefaultGitHubService: GitHubService {
 
     // MARK: Nested types
@@ -26,7 +22,7 @@ class DefaultGitHubService: GitHubService {
             switch self {
             case .profile:
                 return baseURL
-                    .appendingPathComponent("users")
+                    .appendingPathComponent("user")
             case .repositories:
                 return baseURL
                     .appendingPathComponent("user/repos")
@@ -41,6 +37,13 @@ class DefaultGitHubService: GitHubService {
 
     private let session = URLSession.shared
     private let decoder = JSONDecoder()
+    private let information: LoginInformation
+
+    // MARK: Initialization
+
+    init(information: LoginInformation) {
+        self.information = information
+    }
 
     // MARK: Methods
 
@@ -59,9 +62,10 @@ class DefaultGitHubService: GitHubService {
     // MARK: Helpers
 
     private func request(for endpoint: Endpoint) -> URLRequest {
-        let url = endpoint.url(for: Constants.baseURL)
-        let request = URLRequest(url: url)
-        // TODO: Add authentication
+        let url = endpoint.url(for: Configuration.baseURL)
+        var request = URLRequest(url: url)
+        request.addValue("token \(information.accessToken)",
+                         forHTTPHeaderField: "Authorization")
         return request
     }
 
@@ -70,7 +74,10 @@ class DefaultGitHubService: GitHubService {
         session
             .dataTaskPublisher(for: request(for: endpoint))
             .map(\.data)
+            .handleEvents(receiveOutput: { print(#function, endpoint, String(data: $0, encoding: .utf8) ?? "nil") })
             .decode(type: type, decoder: decoder)
+            .receive(on: DispatchQueue.main)
+            .print()
             .eraseToAnyPublisher()
     }
 

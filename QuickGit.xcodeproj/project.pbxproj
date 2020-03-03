@@ -30,6 +30,11 @@
 		9BC8EB25240E69CA004F956C /* DefaultGitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB24240E69CA004F956C /* DefaultGitHubService.swift */; };
 		9BC8EB27240E69FC004F956C /* MockGitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB26240E69FC004F956C /* MockGitHubService.swift */; };
 		9BC8EB29240E7A11004F956C /* MockLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB28240E7A11004F956C /* MockLoginService.swift */; };
+		9BC8EB2D240E7C69004F956C /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB2C240E7C69004F956C /* AuthenticationView.swift */; };
+		9BC8EB2F240E8832004F956C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB2E240E8832004F956C /* Configuration.swift */; };
+		9BC8EB31240E88B0004F956C /* DefaultLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */; };
+		9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */; };
+		9BC8EB37240E8E38004F956C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB36240E8E38004F956C /* KeychainItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +64,11 @@
 		9BC8EB24240E69CA004F956C /* DefaultGitHubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGitHubService.swift; sourceTree = "<group>"; };
 		9BC8EB26240E69FC004F956C /* MockGitHubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGitHubService.swift; sourceTree = "<group>"; };
 		9BC8EB28240E7A11004F956C /* MockLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginService.swift; sourceTree = "<group>"; };
+		9BC8EB2C240E7C69004F956C /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		9BC8EB2E240E8832004F956C /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginService.swift; sourceTree = "<group>"; };
+		9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
+		9BC8EB36240E8E38004F956C /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				9BA2B73C240D27AB001DD893 /* ContentView.swift */,
+				9BC8EB2C240E7C69004F956C /* AuthenticationView.swift */,
 				9BA2B73A240D2689001DD893 /* LoginView.swift */,
 				9BA2B736240D182D001DD893 /* HomeView.swift */,
 				9BA2B743240D2A16001DD893 /* MainView.swift */,
@@ -149,6 +160,7 @@
 			children = (
 				9BA2B714240D144C001DD893 /* AppDelegate.swift */,
 				9BA2B716240D144C001DD893 /* SceneDelegate.swift */,
+				9BC8EB2E240E8832004F956C /* Configuration.swift */,
 				9BA2B71A240D1450001DD893 /* Assets.xcassets */,
 				9BA2B71F240D1450001DD893 /* LaunchScreen.storyboard */,
 				9BA2B722240D1450001DD893 /* Info.plist */,
@@ -170,6 +182,9 @@
 			children = (
 				9BA2B73E240D2813001DD893 /* LoginService.swift */,
 				9BC8EB28240E7A11004F956C /* MockLoginService.swift */,
+				9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */,
+				9BC8EB36240E8E38004F956C /* KeychainItem.swift */,
+				9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -257,14 +272,18 @@
 			files = (
 				9BA2B74C240D441A001DD893 /* Profile.swift in Sources */,
 				9BC8EB29240E7A11004F956C /* MockLoginService.swift in Sources */,
+				9BC8EB37240E8E38004F956C /* KeychainItem.swift in Sources */,
+				9BC8EB31240E88B0004F956C /* DefaultLoginService.swift in Sources */,
 				9BA2B739240D267E001DD893 /* ProfileView.swift in Sources */,
 				9BA2B744240D2A16001DD893 /* MainView.swift in Sources */,
+				9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */,
 				9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */,
 				9BA2B731240D14D9001DD893 /* Issue.swift in Sources */,
 				9BA2B73B240D2689001DD893 /* LoginView.swift in Sources */,
 				9BA2B741240D28CC001DD893 /* String+Extras.swift in Sources */,
 				9BA2B717240D144C001DD893 /* SceneDelegate.swift in Sources */,
 				9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */,
+				9BC8EB2F240E8832004F956C /* Configuration.swift in Sources */,
 				9BA2B72F240D14CA001DD893 /* User.swift in Sources */,
 				9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */,
 				9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */,
@@ -272,6 +291,7 @@
 				9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */,
 				9BC8EB21240E5C5A004F956C /* RepositoryView.swift in Sources */,
 				9BA2B72D240D14C4001DD893 /* Repository.swift in Sources */,
+				9BC8EB2D240E7C69004F956C /* AuthenticationView.swift in Sources */,
 				9BA2B737240D182D001DD893 /* HomeView.swift in Sources */,
 				9BA2B729240D147D001DD893 /* GitHubService.swift in Sources */,
 				9BC8EB27240E69FC004F956C /* MockGitHubService.swift in Sources */,
