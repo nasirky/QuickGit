@@ -58,7 +58,6 @@
 		9BA2B743240D2A16001DD893 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9BA2B745240D2C68001DD893 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9BA2B747240D3224001DD893 /* Publisher+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extras.swift"; sourceTree = "<group>"; };
-		9BA2B749240D3C7C001DD893 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		9BA2B74B240D441A001DD893 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9BC8EB20240E5C5A004F956C /* RepositoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		9BC8EB24240E69CA004F956C /* DefaultGitHubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGitHubService.swift; sourceTree = "<group>"; };
@@ -148,7 +147,6 @@
 				9BA2B736240D182D001DD893 /* HomeView.swift */,
 				9BA2B743240D2A16001DD893 /* MainView.swift */,
 				9BC8EB20240E5C5A004F956C /* RepositoryView.swift */,
-				9BA2B749240D3C7C001DD893 /* ProfileView.swift */,
 				9BA2B745240D2C68001DD893 /* SettingsView.swift */,
 				9BA2B738240D267E001DD893 /* ProfileView.swift */,
 			);

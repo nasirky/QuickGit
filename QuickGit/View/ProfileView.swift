@@ -140,36 +140,25 @@ struct ProfileView: View {
     private func informationRow(for profile: Profile) -> some View {
         HStack {
             Spacer()
-
-            VStack {
-                Text(profile.publicRepositoryCount.description)
-                .font(.headline)
-
-                Text("Repositories")
-                .font(.caption)
-            }
-
+            informationCell(title: "Repositories",
+                            value: profile.publicRepositoryCount.description)
             Spacer()
-
-            VStack {
-                Text(profile.followerCount.description)
-                .font(.headline)
-
-                Text("Followers")
-                .font(.caption)
-            }
-
+            informationCell(title: "Followers",
+                            value: profile.followerCount.description)
             Spacer()
-
-            VStack {
-                Text(profile.followingCount.description)
-                .font(.headline)
-
-                Text("Following")
-                .font(.caption)
-            }
-
+            informationCell(title: "Following",
+                            value: profile.followingCount.description)
             Spacer()
+        }
+    }
+
+    private func informationCell(title: String, value: String) -> some View {
+        VStack {
+            Text(value)
+            .font(.headline)
+
+            Text(title)
+            .font(.caption)
         }
     }
 
