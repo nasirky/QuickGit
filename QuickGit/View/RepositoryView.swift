@@ -7,16 +7,24 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RepositoryView: View {
 
     let gitHubService: GitHubService
     let repository: Repository
+    let imageHelper = ImageHelper()
 
     var body: some View {
         ScrollView {
             header
-            .padding()
+                .padding()
+
+            ContributorsView(gitHubService: gitHubService, repository: repository)
+                .padding(.bottom, 10)
+            Divider()
+            IssuesView(gitHubService: gitHubService, repository: repository)
+                .padding([.top, .bottom], 10)
         }
         .navigationBarTitle(Text(repository.fullName), displayMode: .inline)
     }
@@ -74,4 +82,73 @@ struct RepositoryView: View {
         }
     }
 
+}
+
+struct ContributorsView: View {
+    let gitHubService: GitHubService
+    let repository: Repository
+    let imageHelper = ImageHelper()
+
+    @State var contributors: [User] = []
+    @State var cancellables = Set<AnyCancellable>()
+
+    var body: some View {
+        VStack {
+            Section(header: Text("Contributors").fontWeight(.semibold)) {
+                ForEach(contributors, id: \.id) { contributor in
+                    HStack {
+                        self.imageHelper.profileImage(url: contributor.avatarURL, width: 40, height: 40)
+                            Text("\(contributor.username) - (\(contributor.contributions ?? 0) contributions)")
+                                .padding(.leading, 10)
+                            Spacer()
+                        }.padding(.leading, 20)
+                 }
+            }
+        }
+        .onAppear(perform: load)
+    }
+
+    private func load() {
+        gitHubService
+            .fetchContributors(for: repository)
+            .replaceError(with: [])
+            .assign(to: \.contributors, on: self)
+            .store(in: &cancellables)
+    }
+}
+
+struct IssuesView: View {
+    let gitHubService: GitHubService
+    let repository: Repository
+
+    @State var issues: [Issue] = [] 
+    @State var cancellables = Set<AnyCancellable>()
+
+    var body: some View {
+        VStack {
+            Section(header: Text("Issues").fontWeight(.semibold)) {
+                ForEach(issues, id: \.id) { issue in
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(issue.title)
+                            Spacer()
+                            Text(issue.user.username)
+                        }
+                        Text(issue.body)
+                            .font(.footnote)
+
+                    }.padding()
+                }
+            }
+        }
+        .onAppear(perform: load)
+    }
+
+    private func load() {
+        gitHubService
+            .fetchIssues(for: repository)
+            .replaceError(with: [])
+            .assign(to: \.issues, on: self)
+            .store(in: &cancellables)
+    }
 }

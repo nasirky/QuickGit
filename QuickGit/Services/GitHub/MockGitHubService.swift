@@ -34,18 +34,12 @@ class MockGitHubService: GitHubService {
     }
 
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error> {
-        let issues = [
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-            Issue(),
-        ]
+        let issues = [Issue]()
 
         return .just(issues)
     }
+
+    func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error> {
+        .just([User]())
+     }
 }

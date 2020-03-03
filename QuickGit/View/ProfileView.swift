@@ -18,7 +18,8 @@ struct ProfileView: View {
 
     let loginService: LoginService
     let gitHubService: GitHubService
-
+    let imageHelper = ImageHelper()
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -119,7 +120,7 @@ struct ProfileView: View {
 
     private func header(for profile: Profile) -> some View {
         VStack(spacing: 16) {
-            image(for: profile)
+            imageHelper.profileImage(url: profile.avatarURL)
 
             VStack {
                 Text(profile.name)
@@ -160,29 +161,6 @@ struct ProfileView: View {
             Text(title)
             .font(.caption)
         }
-    }
-
-    private func image(for profile: Profile) -> some View {
-        AsyncImage(
-            size: CGSize(width: 80, height: 80),
-            default: imageDefault,
-            request: { self.loadAvatar(for: profile) })
-        .cornerRadius(40)
-    }
-
-    private var imageDefault: some View {
-        Image(systemName: "person.fill")
-        .resizable()
-        .scaledToFit()
-        .padding(16)
-        .background(Color.accentColor)
-    }
-
-    private func loadAvatar(for profile: Profile) -> AnyPublisher<Image, Never> {
-        guard let url = profile.avatarURL.flatMap(URL.init(string:)) else { return .empty() }
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .compactMap { UIImage(data: $0.data).map(Image.init) }
-            .ignoreFailure()
     }
 
     private func reload() {

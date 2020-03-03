@@ -13,4 +13,6 @@ protocol GitHubService {
     func fetchProfile() -> AnyPublisher<Profile, Error>
     func fetchRepositories() -> AnyPublisher<[Repository], Error>
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error>
+
+    func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error>
 }

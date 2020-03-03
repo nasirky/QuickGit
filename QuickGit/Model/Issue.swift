@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct Issue: Codable {
-    
+struct Issue: Codable, Identifiable {
+    let id: Int
+    let title: String
+    let body: String
+    let url: URL
+    let user: User
 }

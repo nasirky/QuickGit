@@ -33,7 +33,7 @@ struct Repository: Codable {
     let id: Int
     let name: String
     let fullName: String
-    let owner: Owner
+    let owner: User
     let isPrivate: Bool
     let htmlURL: String
     let url: String
@@ -50,22 +50,6 @@ struct Repository: Codable {
     let openIssuesCount: Int?
 
     // Note: all the optionals are due to public repositories
-}
-
-extension Repository {
-    struct Owner: Codable {
-        enum CodingKeys: String, CodingKey {
-            case id
-            case avatarURL = "avatar_url"
-            case repositoriesURL = "repos_url"
-            case gistsURL = "gists_url"
-        }
-
-        let id: Int
-        let avatarURL: String
-        let repositoriesURL: String
-        let gistsURL: String
-    }
 }
 
 struct License: Codable {
