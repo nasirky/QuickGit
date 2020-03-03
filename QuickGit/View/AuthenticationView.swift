@@ -33,10 +33,10 @@ struct AuthenticationView: UIViewRepresentable {
     func makeUIView(
         context: UIViewRepresentableContext<AuthenticationView>
     ) -> WKWebView {
-        let configuration = WKWebViewConfiguration()
-        // TODO: Change configuration?
-        let view = WKWebView(frame: .zero, configuration: configuration)
-        return view
+        let webView = WKWebView()
+        updateUIView(webView, context: context)
+        reload(webView)
+        return webView
     }
 
     func updateUIView(
@@ -44,9 +44,18 @@ struct AuthenticationView: UIViewRepresentable {
         context: UIViewRepresentableContext<AuthenticationView>
     ) {
         webView.navigationDelegate = context.coordinator
-        let request = initialRequest
+    }
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator(view: self)
+    }
+
+    // MARK: Helpers
+
+    fileprivate func reload(_ webView: WKWebView) {
+        let request = initialRequest
         let types = WKWebsiteDataStore.allWebsiteDataTypes()
+
         WKWebsiteDataStore.default()
             .removeData(ofTypes: types,
                         modifiedSince: .distantPast) {
@@ -56,10 +65,6 @@ struct AuthenticationView: UIViewRepresentable {
         }
     }
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(view: self)
-    }
-
 }
 
 // MARK: - WKNavigationDelegate
@@ -67,65 +72,68 @@ struct AuthenticationView: UIViewRepresentable {
 extension AuthenticationView.Coordinator: WKNavigationDelegate {
 
     func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        print(#function, webView)
+        // print(#function, webView)
     }
 
     func webView(_ webView: WKWebView,
                  didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print(#function, webView, String(describing: navigation))
+        // print(#function, webView, String(describing: navigation))
     }
 
     func webView(_ webView: WKWebView,
                  didCommit navigation: WKNavigation!) {
-        print(#function, String(describing: navigation))
+        // print(#function, String(describing: navigation))
     }
 
     func webView(_ webView: WKWebView,
                  didFinish navigation: WKNavigation!) {
-        print(#function, String(describing: navigation))
+        // print(#function, String(describing: navigation))
     }
 
     func webView(_ webView: WKWebView,
                  didStartProvisionalNavigation navigation: WKNavigation!) {
-        print(#function, String(describing: navigation))
+        // print(#function, String(describing: navigation))
     }
 
     func webView(_ webView: WKWebView,
                  didFail navigation: WKNavigation!,
                  withError error: Error) {
-        print(#function, String(describing: navigation), error)
+        // print(#function, String(describing: navigation), error)
     }
 
     func webView(_ webView: WKWebView,
                  didFailProvisionalNavigation navigation: WKNavigation!,
                  withError error: Error) {
-        print(#function, String(describing: navigation), error)
+        // print(#function, String(describing: navigation), error)
     }
 
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print(#function, challenge)
+        // print(#function, challenge)
         completionHandler(.useCredential, nil)
     }
 
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print(#function, navigationAction)
+        // print(#function, navigationAction)
         decisionHandler(.allow)
     }
 
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        print(#function, navigationResponse)
-        decisionHandler(.allow)
+        // print(#function, navigationResponse)
 
         if let url = navigationResponse.response.url,
             let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
             let code = components.queryItems?.first(where: { $0.name == "code" })?.value {
                 view.completion(code)
+                decisionHandler(.cancel)
+                view.reload(webView)
+        } else {
+            decisionHandler(.allow)
         }
     }
 
@@ -133,7 +141,7 @@ extension AuthenticationView.Coordinator: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  preferences: WKWebpagePreferences,
                  decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        print(#function, navigationAction, preferences)
+        // print(#function, navigationAction, preferences)
         decisionHandler(.allow, .init())
     }
 
