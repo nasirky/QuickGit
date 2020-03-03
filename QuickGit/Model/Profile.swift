@@ -10,6 +10,8 @@ import Foundation
 
 struct Profile: Codable {
 
+    // MARK: Nested types
+
     enum CodingKeys: String, CodingKey {
         case id
         case login
@@ -23,6 +25,8 @@ struct Profile: Codable {
         case followers
         case following
     }
+
+    // MARK: Stored properties
 
     var id: Int
     var login: String
