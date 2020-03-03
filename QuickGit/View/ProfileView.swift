@@ -142,7 +142,7 @@ struct ProfileView: View {
             Spacer()
 
             VStack {
-                Text(profile.following.description) // TODO
+                Text(profile.publicRepositoryCount.description)
                 .font(.headline)
 
                 Text("Repositories")
@@ -152,7 +152,7 @@ struct ProfileView: View {
             Spacer()
 
             VStack {
-                Text(profile.followers.description)
+                Text(profile.followerCount.description)
                 .font(.headline)
 
                 Text("Followers")
@@ -162,7 +162,7 @@ struct ProfileView: View {
             Spacer()
 
             VStack {
-                Text(profile.following.description)
+                Text(profile.followingCount.description)
                 .font(.headline)
 
                 Text("Following")

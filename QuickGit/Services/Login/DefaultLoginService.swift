@@ -27,7 +27,6 @@ class DefaultLoginService: LoginService {
     var token
 
     func storedLogin() -> AnyPublisher<LoginInformation, Error> {
-        print(#function, self.token)
         guard let token = token else {
             return .failure(LoginError.noStoredCredentials)
         }
@@ -57,11 +56,11 @@ class DefaultLoginService: LoginService {
             .map(\.data)
             .decode(type: Token.self, decoder: JSONDecoder())
             .map { LoginInformation(accessToken: $0.accessToken) }
+            .handleEvents(receiveOutput: { [unowned self] in self.token = $0.accessToken })
             .eraseToAnyPublisher()
     }
 
     func logout() {
-        print(#function, self.token)
         token = nil
     }
     

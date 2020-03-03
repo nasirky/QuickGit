@@ -14,7 +14,7 @@ class MockGitHubService: GitHubService {
     func fetchProfile() -> AnyPublisher<Profile, Error> {
         let profile = Profile(
             id: 1,
-            login: "pauljohanneskraft",
+            login:"pauljohanneskraft",
             avatarURL: "https://avatars2.githubusercontent.com/u/15239005?s=460&v=4",
             htmlURL: "https://github.com/pauljohanneskraft",
             name: "Paul",
@@ -22,26 +22,15 @@ class MockGitHubService: GitHubService {
             location: "Munich, Germany",
             email: "",
             bio: "...",
-            followers: 19,
-            following: 13
-        )
+            followerCount: 19,
+            followingCount: 13,
+            publicRepositoryCount: 7)
 
         return .just(profile)
     }
 
     func fetchRepositories() -> AnyPublisher<[Repository], Error> {
-        let repositories = [
-            Repository(),
-            Repository(),
-            Repository(),
-            Repository(),
-            Repository(),
-            Repository(),
-            Repository(),
-            Repository(),
-        ]
-
-        return .just(repositories)
+        return .just([])
     }
 
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error> {

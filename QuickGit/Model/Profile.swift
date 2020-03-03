@@ -22,8 +22,9 @@ struct Profile: Codable {
         case location
         case email
         case bio
-        case followers
-        case following
+        case followerCount = "followers"
+        case followingCount = "following"
+        case publicRepositoryCount = "public_repos"
     }
 
     // MARK: Stored properties
@@ -37,7 +38,8 @@ struct Profile: Codable {
     var location: String?
     var email: String?
     var bio: String?
-    var followers: Int
-    var following: Int
+    var followerCount: Int
+    var followingCount: Int
+    var publicRepositoryCount: Int
 
 }

@@ -11,7 +11,7 @@ import SwiftUI
 
 extension Repository: Identifiable {
     var id: String {
-        return "TODO" // TODO!!!!!
+        return fullName
     }
 }
 
@@ -35,7 +35,13 @@ struct MainView: View {
     private func cell(for repository: Repository) -> some View {
         let destination = RepositoryView(gitHubService: gitHubService, repository: repository)
         return NavigationLink(destination: destination) {
-            Text(repository.id)
+            VStack(alignment: .leading) {
+                Text(repository.fullName)
+                .font(.headline)
+
+                Text(repository.description)
+                .font(.caption)
+            }
         }
     }
 
