@@ -23,7 +23,7 @@ struct RepositoryView: View {
 
     private var header: some View {
         VStack(alignment: .leading) {
-            Text(repository.description)
+            Text(repository.description ?? "-")
             .font(.caption)
             .foregroundColor(.gray)
 
@@ -55,11 +55,11 @@ struct RepositoryView: View {
     private var statisticsSection: some View {
         HStack {
             Spacer()
-            statisticsCell(title: "Watchers", value: repository.watcherCount.description)
+            statisticsCell(title: "Watchers", value: "\(repository.watchersCount ?? 0)")
             Spacer()
-            statisticsCell(title: "Stars", value: repository.starCount.description)
+            statisticsCell(title: "Stars", value: "\(repository.starsCount ?? 0)")
             Spacer()
-            statisticsCell(title: "Forks", value: repository.forksCount.description)
+            statisticsCell(title: "Forks", value: "\(repository.forksCount ?? 0)")
             Spacer()
         }
     }

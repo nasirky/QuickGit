@@ -10,9 +10,6 @@ import Combine
 import SwiftUI
 
 extension Repository: Identifiable {
-    var id: String {
-        return fullName
-    }
 }
 
 struct MainView: View {
@@ -37,10 +34,10 @@ struct MainView: View {
         return NavigationLink(destination: destination) {
             VStack(alignment: .leading) {
                 Text(repository.fullName)
-                .font(.headline)
+                    .font(.headline)
 
-                Text(repository.description)
-                .font(.caption)
+                Text(repository.descriptionText)
+                    .font(.caption)
             }
         }
     }

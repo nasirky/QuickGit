@@ -9,27 +9,73 @@
 import Foundation
 
 struct Repository: Codable {
-
-    // MARK: Nested types
-
     enum CodingKeys: String, CodingKey {
+        case id
+        case name
         case fullName = "full_name"
+        case owner
+        case isPrivate = "private"
+        case htmlURL = "html_url"
+        case url
         case description
-        case isFork = "fork"
-        case forksCount = "forks_count"
-        case starCount = "stargazers_count"
-        case watcherCount = "watchers_count"
+        case isDisabled = "disabled"
         case topics
+        case license
+
+        case forksCount = "forks_count"
+        case starsCount = "stargazers_count"
+        case watchersCount = "watchers_count"
+        case subscribersCount = "subscribers_count"
+        case networkCount = "network_count"
+        case openIssuesCount = "open_issues_count"
     }
 
-    // MARK: Stored properties
+    let id: Int
+    let name: String
+    let fullName: String
+    let owner: Owner
+    let isPrivate: Bool
+    let htmlURL: String
+    let url: String
+    let description: String?
+    let isDisabled: Bool?
+    let topics: [String]?
+    let license: License?
 
-    var fullName: String
-    var description: String
-    var isFork: Bool
-    var forksCount: Int
-    var starCount: Int
-    var watcherCount: Int
-    var topics: [String]?
+    let forksCount: Int?
+    let starsCount: Int?
+    let watchersCount: Int?
+    let subscribersCount: Int?
+    let networkCount: Int?
+    let openIssuesCount: Int?
 
+    // Note: all the optionals are due to public repositories
+}
+
+extension Repository {
+    struct Owner: Codable {
+        enum CodingKeys: String, CodingKey {
+            case id
+            case avatarURL = "avatar_url"
+            case repositoriesURL = "repos_url"
+            case gistsURL = "gists_url"
+        }
+
+        let id: Int
+        let avatarURL: String
+        let repositoriesURL: String
+        let gistsURL: String
+    }
+}
+
+struct License: Codable {
+    let key: String
+    let name: String
+    let url: String
+}
+
+extension Repository {
+    var descriptionText: String {
+        description ?? ""
+    }
 }
