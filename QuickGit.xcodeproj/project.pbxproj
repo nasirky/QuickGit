@@ -25,7 +25,7 @@
 		9BA2B744240D2A16001DD893 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B743240D2A16001DD893 /* MainView.swift */; };
 		9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B745240D2C68001DD893 /* SettingsView.swift */; };
 		9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B747240D3224001DD893 /* Publisher+Extras.swift */; };
-		9BA2B74A240D3C7C001DD893 /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B749240D3C7C001DD893 /* RepositoryView.swift */; };
+		9BA2B74A240D3C7C001DD893 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B749240D3C7C001DD893 /* ProfileView.swift */; };
 		9BA2B74C240D441A001DD893 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B74B240D441A001DD893 /* Profile.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,8 +50,8 @@
 		9BA2B743240D2A16001DD893 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9BA2B745240D2C68001DD893 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9BA2B747240D3224001DD893 /* Publisher+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extras.swift"; sourceTree = "<group>"; };
-		9BA2B749240D3C7C001DD893 /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RepositoryView.swift; path = ../../../../../RepositoryView.swift; sourceTree = "<group>"; };
-		9BA2B74B240D441A001DD893 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Profile.swift; path = ../../../../../Profile.swift; sourceTree = "<group>"; };
+		9BA2B749240D3C7C001DD893 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		9BA2B74B240D441A001DD893 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 				9BA2B73A240D2689001DD893 /* LoginView.swift */,
 				9BA2B736240D182D001DD893 /* HomeView.swift */,
 				9BA2B743240D2A16001DD893 /* MainView.swift */,
-				9BA2B749240D3C7C001DD893 /* RepositoryView.swift */,
+				9BA2B749240D3C7C001DD893 /* ProfileView.swift */,
 				9BA2B745240D2C68001DD893 /* SettingsView.swift */,
 				9BA2B738240D267E001DD893 /* ProfileView.swift */,
 			);
@@ -239,7 +239,7 @@
 				9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */,
 				9BA2B72F240D14CA001DD893 /* User.swift in Sources */,
 				9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */,
-				9BA2B74A240D3C7C001DD893 /* RepositoryView.swift in Sources */,
+				9BA2B74A240D3C7C001DD893 /* ProfileView.swift in Sources */,
 				9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */,
 				9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */,
 				9BA2B72D240D14C4001DD893 /* Repository.swift in Sources */,
