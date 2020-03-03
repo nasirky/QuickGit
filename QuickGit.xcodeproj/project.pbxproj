@@ -25,8 +25,8 @@
 		9BA2B744240D2A16001DD893 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B743240D2A16001DD893 /* MainView.swift */; };
 		9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B745240D2C68001DD893 /* SettingsView.swift */; };
 		9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B747240D3224001DD893 /* Publisher+Extras.swift */; };
-		9BA2B74A240D3C7C001DD893 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B749240D3C7C001DD893 /* ProfileView.swift */; };
 		9BA2B74C240D441A001DD893 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B74B240D441A001DD893 /* Profile.swift */; };
+		9BC8EB21240E5C5A004F956C /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB20240E5C5A004F956C /* RepositoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +52,7 @@
 		9BA2B747240D3224001DD893 /* Publisher+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extras.swift"; sourceTree = "<group>"; };
 		9BA2B749240D3C7C001DD893 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		9BA2B74B240D441A001DD893 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		9BC8EB20240E5C5A004F956C /* RepositoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +130,7 @@
 				9BA2B73A240D2689001DD893 /* LoginView.swift */,
 				9BA2B736240D182D001DD893 /* HomeView.swift */,
 				9BA2B743240D2A16001DD893 /* MainView.swift */,
+				9BC8EB20240E5C5A004F956C /* RepositoryView.swift */,
 				9BA2B749240D3C7C001DD893 /* ProfileView.swift */,
 				9BA2B745240D2C68001DD893 /* SettingsView.swift */,
 				9BA2B738240D267E001DD893 /* ProfileView.swift */,
@@ -239,9 +241,9 @@
 				9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */,
 				9BA2B72F240D14CA001DD893 /* User.swift in Sources */,
 				9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */,
-				9BA2B74A240D3C7C001DD893 /* ProfileView.swift in Sources */,
 				9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */,
 				9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */,
+				9BC8EB21240E5C5A004F956C /* RepositoryView.swift in Sources */,
 				9BA2B72D240D14C4001DD893 /* Repository.swift in Sources */,
 				9BA2B737240D182D001DD893 /* HomeView.swift in Sources */,
 				9BA2B729240D147D001DD893 /* GitHubService.swift in Sources */,
