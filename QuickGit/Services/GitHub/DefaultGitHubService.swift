@@ -18,6 +18,7 @@ class DefaultGitHubService: GitHubService {
         case repositories
         case issues(Repository)
         case contributors(Repository)
+        case pullRequest(Repository)
 
         func url(for baseURL: URL) -> URL {
             switch self {
@@ -33,6 +34,9 @@ class DefaultGitHubService: GitHubService {
             case .contributors(let repo):
                 return baseURL
                     .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/contributors")
+            case .pullRequest(let repo):
+                return baseURL
+                    .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/pulls")
             }
         }
     }
@@ -65,6 +69,10 @@ class DefaultGitHubService: GitHubService {
 
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error> {
         request(at: .contributors(repository))
+    }
+
+    func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error> {
+        request(at: .pullRequest(repository))
     }
 
     // MARK: Helpers

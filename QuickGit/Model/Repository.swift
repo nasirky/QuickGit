@@ -28,6 +28,8 @@ struct Repository: Codable {
         case subscribersCount = "subscribers_count"
         case networkCount = "network_count"
         case openIssuesCount = "open_issues_count"
+
+        case collaboratorsURL = "collaborators_url"
     }
 
     let id: Int
@@ -48,6 +50,8 @@ struct Repository: Codable {
     let subscribersCount: Int?
     let networkCount: Int?
     let openIssuesCount: Int?
+
+    let collaboratorsURL: String
 
     // Note: all the optionals are due to public repositories
 }

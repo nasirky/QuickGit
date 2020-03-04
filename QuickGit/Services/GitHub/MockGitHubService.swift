@@ -42,4 +42,8 @@ class MockGitHubService: GitHubService {
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error> {
         .just([User]())
      }
+
+    func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error> {
+        .just([PullRequest]())
+    }
 }
