@@ -18,8 +18,7 @@ struct ProfileView: View {
 
     let loginService: LoginService
     let gitHubService: GitHubService
-    let imageHelper = ImageHelper()
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -120,7 +119,7 @@ struct ProfileView: View {
 
     private func header(for profile: Profile) -> some View {
         VStack(spacing: 16) {
-            imageHelper.profileImage(url: profile.avatarURL)
+            ProfileImage(url: profile.avatarURL, width: 80, height: 80)
 
             VStack {
                 Text(profile.name)

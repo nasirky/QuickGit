@@ -13,7 +13,6 @@ struct RepositoryView: View {
 
     let gitHubService: GitHubService
     let repository: Repository
-    let imageHelper = ImageHelper()
 
     var body: some View {
 //        ScrollView {
@@ -101,7 +100,6 @@ struct RepositoryView: View {
 struct ContributorsView: View {
     let gitHubService: GitHubService
     let repository: Repository
-    let imageHelper = ImageHelper()
 
     @State var contributors: [User] = []
     @State var cancellables = Set<AnyCancellable>()
@@ -110,7 +108,7 @@ struct ContributorsView: View {
         VStack {
                 ForEach(contributors, id: \.id) { contributor in
                     HStack {
-                        self.imageHelper.profileImage(url: contributor.avatarURL, width: 40, height: 40)
+                        ProfileImage(url: contributor.avatarURL, width: 40, height: 40)
                         Text(contributor.username)
                         Spacer()
                          Text("\(contributor.contributions ?? 0) Contributions")
