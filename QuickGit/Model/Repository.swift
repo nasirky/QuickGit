@@ -62,9 +62,3 @@ struct License: Codable {
     let name: String
     let url: String
 }
-
-extension Repository {
-    var descriptionText: String {
-        description ?? ""
-    }
-}

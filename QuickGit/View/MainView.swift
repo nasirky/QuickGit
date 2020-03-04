@@ -31,10 +31,10 @@ struct MainView: View {
         return NavigationLink(destination: destination) {
             VStack(alignment: .leading) {
                 Text(repository.fullName)
-                    .font(.headline)
+                .font(.headline)
 
-                Text(repository.descriptionText)
-                    .font(.caption)
+                Text(repository.description ?? "")
+                .font(.caption)
             }
         }
     }

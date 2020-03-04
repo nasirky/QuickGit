@@ -14,6 +14,7 @@ struct Issue: Codable, Identifiable {
     let body: String
     let url: URL
     let user: User
+    let number: Int
     let assignees: [User]?
 
 }

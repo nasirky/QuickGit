@@ -40,7 +40,7 @@ class DefaultGitHubService: GitHubService {
                     .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/pulls")
             case .issueComments(let repo, let issue):
                 return Endpoint.issues(repo).url(for: baseURL)
-                    .appendingPathComponent("\(issue.id)/comments")
+                    .appendingPathComponent("\(issue.number)/comments")
             }
         }
     }

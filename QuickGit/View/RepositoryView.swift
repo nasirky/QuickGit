@@ -36,7 +36,7 @@ struct RepositoryView: View {
 
     private var header: some View {
         VStack(alignment: .leading) {
-            Text(repository.description ?? "No")
+            Text(repository.description ?? "-")
             .font(.caption)
             .foregroundColor(.gray)
 
@@ -45,9 +45,8 @@ struct RepositoryView: View {
             Divider()
 
             statisticsSection
-
-            Divider()
         }
+        .padding(.vertical, 8)
     }
 
     private var topicSection: some View {
