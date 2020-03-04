@@ -9,9 +9,6 @@
 import Combine
 import SwiftUI
 
-extension Repository: Identifiable {
-}
-
 struct MainView: View {
 
     @State var repositories = [Repository]()

@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Repository: Codable {
+struct Repository: Codable, Identifiable {
+
     enum CodingKeys: String, CodingKey {
         case id
         case name

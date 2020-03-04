@@ -8,6 +8,7 @@
 
 import Foundation
 
+#if DEBUG
 extension Repository {
     static func mock() -> [Repository] {
         let json =
@@ -203,3 +204,4 @@ extension Repository {
         return decoded ?? []
     }
 }
+#endif

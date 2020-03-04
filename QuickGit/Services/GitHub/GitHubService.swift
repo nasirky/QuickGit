@@ -16,4 +16,5 @@ protocol GitHubService {
 
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error>
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error>
+    func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error>
 }

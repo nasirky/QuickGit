@@ -11,15 +11,14 @@ import SwiftUI
 
 struct ProfileImage: View {
     let url: String?
-    let width: Int
-    let height: Int
+    let size: CGFloat
 
     var body: some View {
         AsyncImage(
-            size: CGSize(width: width, height: height),
             default: imageDefault,
             request: { self.loadAvatar(url: self.url) })
-            .cornerRadius(40)
+        .frame(width: size, height: size)
+        .cornerRadius(size / 2)
     }
 
     private var imageDefault: some View {

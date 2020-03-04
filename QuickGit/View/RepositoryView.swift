@@ -15,31 +15,23 @@ struct RepositoryView: View {
     let repository: Repository
 
     var body: some View {
-//        ScrollView {
-        VStack {
+        List {
+            header
 
-            List {
-                header
-
-                Section(header: Text("Contributors")) {
-                    ContributorsView(gitHubService: gitHubService, repository: repository)
-                }
-
-                Section(header: Text("Pull Requests")) {
-                    PullRequestsView(gitHubService: gitHubService, repository: repository)
-                }
-
-                Section(header: Text("Issues")) {
-                    IssuesView(gitHubService: gitHubService, repository: repository)
-                }
-            }
-            .listStyle(GroupedListStyle())
+            Section(header: Text("Contributors")) {
+                ContributorsView(gitHubService: gitHubService, repository: repository)
             }
 
-//            Divider()
-//
+            Section(header: Text("Pull Requests")) {
+                PullRequestsView(gitHubService: gitHubService, repository: repository)
+            }
 
-        .navigationBarTitle(Text(repository.fullName), displayMode: .inline)
+            Section(header: Text("Issues")) {
+                IssuesView(gitHubService: gitHubService, repository: repository)
+            }
+        }
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle(Text(repository.name), displayMode: .inline)
     }
 
     private var header: some View {
@@ -108,7 +100,7 @@ struct ContributorsView: View {
         VStack {
                 ForEach(contributors, id: \.id) { contributor in
                     HStack {
-                        ProfileImage(url: contributor.avatarURL, width: 40, height: 40)
+                        ProfileImage(url: contributor.avatarURL, size: 40)
                         Text(contributor.username)
                         Spacer()
                          Text("\(contributor.contributions ?? 0) Contributions")
@@ -138,19 +130,31 @@ struct IssuesView: View {
 
     var body: some View {
         VStack {
-            ForEach(issues, id: \.id) { issue in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(issue.title)
-                        Spacer()
-                        Text(issue.user.username)
-                            .foregroundColor(.gray)
-                    }
-                    Text(issue.body)
-                        .font(.footnote)
-                }.padding(.top, 16)
+            ForEach(issues) { issue in
+                NavigationLink(destination: IssueView(repository: self.repository, issue: issue, gitHubService: self.gitHubService)) {
+                    self.cell(for: issue)
+
+                }
             }
-        }.onAppear(perform: load)
+        }
+        .onAppear(perform: load)
+    }
+
+    private func cell(for issue: Issue) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(issue.title)
+
+                Spacer()
+
+                Text(issue.user.username)
+                .foregroundColor(.gray)
+            }
+
+            Text(issue.body)
+            .font(.footnote)
+        }
+        .padding(.top, 16)
     }
 
     private func load() {
@@ -171,9 +175,10 @@ struct PullRequestsView: View {
 
     var body: some View {
         VStack {
-            ForEach(pullRequests, id: \.id) { pullRequest in
+            ForEach(pullRequests) { pullRequest in
                 VStack(alignment: .leading) {
                     Text(pullRequest.title)
+
                     Text(pullRequest.body)
                         .font(.caption)
 

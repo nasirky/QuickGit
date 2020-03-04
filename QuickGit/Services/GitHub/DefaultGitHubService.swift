@@ -19,6 +19,7 @@ class DefaultGitHubService: GitHubService {
         case issues(Repository)
         case contributors(Repository)
         case pullRequest(Repository)
+        case issueComments(Repository, Issue)
 
         func url(for baseURL: URL) -> URL {
             switch self {
@@ -37,6 +38,9 @@ class DefaultGitHubService: GitHubService {
             case .pullRequest(let repo):
                 return baseURL
                     .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/pulls")
+            case .issueComments(let repo, let issue):
+                return Endpoint.issues(repo).url(for: baseURL)
+                    .appendingPathComponent("\(issue.id)/comments")
             }
         }
     }
@@ -44,8 +48,13 @@ class DefaultGitHubService: GitHubService {
     // MARK: Stored properties
 
     private let session = URLSession.shared
-    private let decoder = JSONDecoder()
     private let information: LoginInformation
+
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
 
     // MARK: Initialization
 
@@ -65,6 +74,10 @@ class DefaultGitHubService: GitHubService {
 
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error> {
         request(at: .issues(repository))
+    }
+
+    func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error> {
+        request(at: .issueComments(repository, issue))
     }
 
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error> {

@@ -14,4 +14,21 @@ struct Issue: Codable, Identifiable {
     let body: String
     let url: URL
     let user: User
+    let assignees: [User]?
+
+}
+
+struct IssueComment: Codable, Identifiable {
+
+    enum CodingKeys: String, CodingKey {
+        case id, body, user
+        case creationDate = "created_at"
+        case updateDate = "updated_at"
+    }
+
+    let id: Int
+    let body: String
+    let user: User
+    let creationDate: Date
+    let updateDate: Date
 }

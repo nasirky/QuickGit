@@ -46,4 +46,9 @@ class MockGitHubService: GitHubService {
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error> {
         .just([PullRequest]())
     }
+
+    func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error> {
+        .just([])
+    }
+
 }

@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct PullRequest: Codable {
+struct PullRequest: Codable, Identifiable {
+
     enum CodingKeys: String, CodingKey {
         case id
         case state

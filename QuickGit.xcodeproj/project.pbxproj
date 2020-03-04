@@ -39,6 +39,9 @@
 		9BC8EB31240E88B0004F956C /* DefaultLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */; };
 		9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */; };
 		9BC8EB37240E8E38004F956C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB36240E8E38004F956C /* KeychainItem.swift */; };
+		9BE30390240FBBA800DED596 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE3038F240FBBA800DED596 /* AsyncImage.swift */; };
+		9BE30392240FBD2F00DED596 /* CGSize+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE30391240FBD2F00DED596 /* CGSize+Extras.swift */; };
+		9BE30394240FBE9300DED596 /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE30393240FBE9300DED596 /* IssueView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +79,9 @@
 		9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginService.swift; sourceTree = "<group>"; };
 		9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 		9BC8EB36240E8E38004F956C /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
+		9BE3038F240FBBA800DED596 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
+		9BE30391240FBD2F00DED596 /* CGSize+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Extras.swift"; sourceTree = "<group>"; };
+		9BE30393240FBE9300DED596 /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,8 +173,10 @@
 				9BA2B743240D2A16001DD893 /* MainView.swift */,
 				9BC8EB20240E5C5A004F956C /* RepositoryView.swift */,
 				9BA2B745240D2C68001DD893 /* SettingsView.swift */,
+				9BE30393240FBE9300DED596 /* IssueView.swift */,
 				9BA2B738240D267E001DD893 /* ProfileView.swift */,
 				5000906B240F096A0008F865 /* ProfileImage.swift */,
+				9BE3038F240FBBA800DED596 /* AsyncImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				9BA2B740240D28CC001DD893 /* String+Extras.swift */,
+				9BE30391240FBD2F00DED596 /* CGSize+Extras.swift */,
 				9BA2B747240D3224001DD893 /* Publisher+Extras.swift */,
 			);
 			path = Extensions;
@@ -298,15 +307,18 @@
 				9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */,
 				9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */,
 				9BA2B731240D14D9001DD893 /* Issue.swift in Sources */,
+				9BE30390240FBBA800DED596 /* AsyncImage.swift in Sources */,
 				9BA2B73B240D2689001DD893 /* LoginView.swift in Sources */,
 				9BA2B741240D28CC001DD893 /* String+Extras.swift in Sources */,
 				9BA2B717240D144C001DD893 /* SceneDelegate.swift in Sources */,
+				9BE30394240FBE9300DED596 /* IssueView.swift in Sources */,
 				9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */,
 				5013F19D240FA3A500E0BF9F /* PullRequest.swift in Sources */,
 				9BC8EB2F240E8832004F956C /* Configuration.swift in Sources */,
 				9BA2B72F240D14CA001DD893 /* User.swift in Sources */,
 				9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */,
 				9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */,
+				9BE30392240FBD2F00DED596 /* CGSize+Extras.swift in Sources */,
 				9BC8EB25240E69CA004F956C /* DefaultGitHubService.swift in Sources */,
 				5000906C240F096A0008F865 /* ProfileImage.swift in Sources */,
 				5000906A240F02780008F865 /* Contributor.swift in Sources */,

@@ -119,7 +119,7 @@ struct ProfileView: View {
 
     private func header(for profile: Profile) -> some View {
         VStack(spacing: 16) {
-            ProfileImage(url: profile.avatarURL, width: 80, height: 80)
+            ProfileImage(url: profile.avatarURL, size: 80)
 
             VStack {
                 Text(profile.name)
@@ -167,44 +167,6 @@ struct ProfileView: View {
         .ignoreFailure()
         .map(Optional.some)
         .assign(to: \.profile, on: self)
-        .store(in: &cancellables)
-    }
-
-}
-
-
-struct AsyncImage<V: View>: View {
-
-    @State
-    private var image: Image? = nil
-
-    @State
-    private var cancellables = Set<AnyCancellable>()
-
-    let size: CGSize
-    let `default`: V
-    let request: () -> AnyPublisher<Image, Never>
-
-    var body: some View {
-        Group {
-            image.map { image in
-                image
-                .resizable()
-                .scaledToFill()
-            }
-
-            if image == nil {
-                `default`
-            }
-        }
-        .frame(width: size.width, height: size.height)
-        .onAppear(perform: reload)
-    }
-
-    private func reload() {
-        request()
-        .map(Optional.some)
-        .assign(to: \.image, on: self)
         .store(in: &cancellables)
     }
 
