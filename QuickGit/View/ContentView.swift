@@ -29,6 +29,7 @@ struct ContentView: View {
             }
         }
         .onAppear(perform: storedLogin)
+        .accentColor(Color("Accent"))
     }
 
     private func storedLogin() {
