@@ -11,25 +11,26 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State var loginInformation: LoginInformation? = nil
-    @State var cancellables = Set<AnyCancellable>()
+    @State private var loginInformation: LoginInformation?
+    @State private var cancellables = Set<AnyCancellable>()
 
     let loginService: LoginService
 
     var body: some View {
-        Group {
-            if loginInformation == nil {
-                LoginView(information: $loginInformation,
-                          loginService: loginService)
-            }
-            loginInformation.map { information in
-                HomeView(loginInformation: $loginInformation,
-                         loginService: loginService,
-                         gitHubService: DefaultGitHubService(information: information))
-            }
-        }
-        .onAppear(perform: storedLogin)
-        .accentColor(Color("Accent"))
+        When(exists: loginInformation,
+             then: homeView,
+             else: loginView)
+    }
+
+    private var loginView: some View {
+        LoginView(information: $loginInformation,
+                  loginService: loginService)
+    }
+
+    private func homeView(_ information: LoginInformation) -> some View {
+        HomeView(loginInformation: $loginInformation,
+                 loginService: loginService,
+                 gitHubService: DefaultGitHubService(information: information))
     }
 
     private func storedLogin() {

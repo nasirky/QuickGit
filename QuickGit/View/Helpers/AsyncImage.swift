@@ -22,17 +22,9 @@ struct AsyncImage<V: View>: View {
     // MARK: Computed properties
 
     var body: some View {
-        Group {
-            image.map { image in
-                image
-                .resizable()
-                .scaledToFill()
-            }
-
-            if image == nil {
-                `default`
-            }
-        }
+        When(exists: image,
+             then: { $0.resizable().scaledToFill() },
+             else: `default`)
         .onAppear(perform: reload)
     }
 

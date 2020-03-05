@@ -21,14 +21,9 @@ struct ProfileView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                profile
-                .map(profileView)
-
-                if profile == nil {
-                    loadingView
-                }
-            }
+            When(exists: profile,
+                 then: profileView,
+                 else: loadingView)
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
         }

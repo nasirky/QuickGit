@@ -6,6 +6,7 @@
 //  Copyright © 2020 QuickBird Studios. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 import WebKit
 
