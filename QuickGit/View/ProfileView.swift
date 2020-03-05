@@ -11,13 +11,18 @@ import SwiftUI
 
 struct ProfileView: View {
 
-    @State var profile: Profile?
-    @State var cancellables = Set<AnyCancellable>()
-    @State var showLogoutAlert = false
+    // MARK: Stored properties
+
     @Binding var loginInformation: LoginInformation?
 
     let loginService: LoginService
     let gitHubService: GitHubService
+
+    @State private var profile: Profile?
+    @State private var cancellables = Set<AnyCancellable>()
+    @State private var showLogoutAlert = false
+
+    // MARK: Views
 
     var body: some View {
         NavigationView {
@@ -29,11 +34,6 @@ struct ProfileView: View {
         }
         .alert(isPresented: $showLogoutAlert, content: logoutAlert)
         .onAppear(perform: reload)
-    }
-
-    private func logout() {
-        self.loginService.logout()
-        self.loginInformation = nil
     }
 
     private func logoutAlert() -> Alert {
@@ -57,13 +57,6 @@ struct ProfileView: View {
             .resizable()
             .scaledToFit()
         }
-    }
-
-    private func openInBrowser() {
-        guard let url = profile.flatMap({ URL(string: $0.htmlURL) }) else {
-            return
-        }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     private var loadingView: some View {
@@ -155,6 +148,20 @@ struct ProfileView: View {
             Text(title)
             .font(.caption)
         }
+    }
+
+    // MARK: Helpers
+
+    private func logout() {
+        self.loginService.logout()
+        self.loginInformation = nil
+    }
+
+    private func openInBrowser() {
+        guard let url = profile.flatMap({ URL(string: $0.htmlURL) }) else {
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
     private func reload() {

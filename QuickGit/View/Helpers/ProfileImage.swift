@@ -10,8 +10,13 @@ import Combine
 import SwiftUI
 
 struct ProfileImage: View {
+
+    // MARK: Stored properties
+
     let url: String?
     let size: CGFloat
+
+    // MARK: Computed properties
 
     var body: some View {
         AsyncImage(
@@ -29,10 +34,13 @@ struct ProfileImage: View {
             .background(Color.accentColor)
     }
 
+    // MARK: Helpers
+
     private func loadAvatar(url avatarURL: String?) -> AnyPublisher<Image, Never> {
          guard let url = avatarURL.flatMap(URL.init(string:)) else { return .empty() }
          return URLSession.shared.dataTaskPublisher(for: url)
              .compactMap { UIImage(data: $0.data).map(Image.init) }
              .ignoreFailure()
      }
+
 }

@@ -11,15 +11,21 @@ import SwiftUI
 
 struct ContentView: View {
 
+    // MARK: Stored properties
+
+    let loginService: LoginService
+
     @State private var loginInformation: LoginInformation?
     @State private var cancellables = Set<AnyCancellable>()
 
-    let loginService: LoginService
+    // MARK: Views
 
     var body: some View {
         When(exists: loginInformation,
              then: homeView,
              else: loginView)
+        .onAppear(perform: storedLogin)
+        .accentColor(Color("Accent"))
     }
 
     private var loginView: some View {
@@ -33,8 +39,11 @@ struct ContentView: View {
                  gitHubService: DefaultGitHubService(information: information))
     }
 
+    // MARK: Helpers
+
     private func storedLogin() {
         loginService.storedLogin()
+        .print()
         .ignoreFailure()
         .map(Optional.some)
         .assign(to: \.loginInformation, on: self)

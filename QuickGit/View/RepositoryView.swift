@@ -11,15 +11,19 @@ import Combine
 
 struct RepositoryView: View {
 
-    let gitHubService: GitHubService
+    // MARK: Stored properties
+
     let repository: Repository
+    let gitHubService: GitHubService
+
+    // MARK: Views
 
     var body: some View {
         List {
             header
 
             Section(header: Text("Contributors")) {
-                ContributorsView(gitHubService: gitHubService, repository: repository)
+                ContributorsView(repository: repository, gitHubService: gitHubService)
             }
 
             Section(header: Text("Pull Requests")) {
@@ -27,7 +31,7 @@ struct RepositoryView: View {
             }
 
             Section(header: Text("Issues")) {
-                IssuesView(gitHubService: gitHubService, repository: repository)
+                IssuesView(repository: repository, gitHubService: gitHubService)
             }
         }
         .listStyle(GroupedListStyle())
@@ -89,11 +93,16 @@ struct RepositoryView: View {
 }
 
 struct ContributorsView: View {
-    let gitHubService: GitHubService
-    let repository: Repository
 
-    @State var contributors: [User] = []
-    @State var cancellables = Set<AnyCancellable>()
+    // MARK: Stored properties
+
+    let repository: Repository
+    let gitHubService: GitHubService
+
+    @State private var contributors: [User] = []
+    @State private var cancellables = Set<AnyCancellable>()
+
+    // MARK: Views
 
     var body: some View {
         VStack {
@@ -111,6 +120,8 @@ struct ContributorsView: View {
         .onAppear(perform: load)
     }
 
+    // MARK: Helpers
+
     private func load() {
         gitHubService
             .fetchContributors(for: repository)
@@ -118,14 +129,18 @@ struct ContributorsView: View {
             .assign(to: \.contributors, on: self)
             .store(in: &cancellables)
     }
+
 }
 
 struct IssuesView: View {
-    let gitHubService: GitHubService
-    let repository: Repository
 
-    @State var issues: [Issue] = [] 
-    @State var cancellables = Set<AnyCancellable>()
+    // MARK: Stored properties
+
+    let repository: Repository
+    let gitHubService: GitHubService
+
+    @State private var issues: [Issue] = []
+    @State private var cancellables = Set<AnyCancellable>()
 
     var body: some View {
         VStack {

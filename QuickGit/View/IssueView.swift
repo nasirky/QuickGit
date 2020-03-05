@@ -20,19 +20,26 @@ extension RelativeDateTimeFormatter {
 
 struct IssueView: View {
 
+    // MARK: Stored properties
+
     let repository: Repository
     let issue: Issue
     let gitHubService: GitHubService
 
-    @State var cancellables = Set<AnyCancellable>()
-    @State var comments = [IssueComment]()
+    // MARK: Views
 
     var body: some View {
+        ReloadView(
+            action: gitHubService.fetchComments(for: issue, in: repository).ignoreFailure(),
+            create: contentView
+        )
+    }
+
+    private func contentView(for comments: [IssueComment]) -> some View {
         List(comments) { comment in
             self.cell(for: comment)
         }
         .navigationBarTitle(issue.title)
-        .onAppear(perform: reload)
     }
 
     private func cell(for comment: IssueComment) -> some View {
@@ -62,11 +69,4 @@ struct IssueView: View {
         .padding(.vertical, 8)
     }
 
-    private func reload() {
-        gitHubService.fetchComments(for: issue, in: repository)
-        .print()
-        .ignoreFailure()
-        .assign(to: \.comments, on: self)
-        .store(in: &cancellables)
-    }
 }

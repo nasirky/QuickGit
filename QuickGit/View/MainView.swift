@@ -11,23 +11,31 @@ import SwiftUI
 
 struct MainView: View {
 
-    @State var repositories = [Repository]()
-    @State var cancellables = Set<AnyCancellable>()
+    // MARK: Stored properties
 
     let gitHubService: GitHubService
 
+    @State private var repositories = [Repository]()
+    @State private var cancellables = Set<AnyCancellable>()
+
+    // MARK: Views
+
     var body: some View {
+        ReloadView(action: gitHubService.fetchRepositories().ignoreFailure(),
+                   create: contentView)
+    }
+
+    private func contentView(for repositories: [Repository]) -> some View {
         NavigationView {
             List(repositories) { repository in
                 self.cell(for: repository)
             }
             .navigationBarTitle("Repositories")
         }
-        .onAppear(perform: reload)
     }
 
     private func cell(for repository: Repository) -> some View {
-        let destination = RepositoryView(gitHubService: gitHubService, repository: repository)
+        let destination = RepositoryView(repository: repository, gitHubService: gitHubService)
         return NavigationLink(destination: destination) {
             VStack(alignment: .leading) {
                 Text(repository.fullName)
@@ -37,13 +45,6 @@ struct MainView: View {
                 .font(.caption)
             }
         }
-    }
-
-    private func reload() {
-        gitHubService.fetchRepositories()
-        .replaceError(with: [])
-        .assign(to: \.repositories, on: self)
-        .store(in: &cancellables)
     }
 
 }

@@ -10,11 +10,15 @@ import SwiftUI
 
 struct HomeView: View {
 
+    // MARK: Nested types
+
     enum Tab {
         case profile
         case main
         case settings
     }
+
+    // MARK: Stored properties
 
     @Binding var loginInformation: LoginInformation?
 
@@ -22,6 +26,8 @@ struct HomeView: View {
     let gitHubService: GitHubService
 
     @State var selection = Tab.main
+
+    // MARK: Views
 
     var body: some View {
         TabView(selection: $selection) {
@@ -61,4 +67,5 @@ struct HomeView: View {
         view.tag(tab)
             .tabItem { tabItem(self.selection == tab) }
     }
+
 }

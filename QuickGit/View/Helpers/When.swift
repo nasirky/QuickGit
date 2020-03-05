@@ -43,12 +43,3 @@ struct When<ThenView: View, ElseView: View>: View {
     }
 
 }
-
-protocol OptionalType {
-    associatedtype Wrapped
-    var asOptional: Wrapped? { get }
-}
-
-extension Optional: OptionalType {
-    var asOptional: Wrapped? { self }
-}

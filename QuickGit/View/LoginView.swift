@@ -20,16 +20,23 @@ let request: URLRequest = {
 
 struct LoginView: View {
 
-    @State var cancellables = Set<AnyCancellable>()
+    // MARK: Stored properties
+
     @Binding var information: LoginInformation?
 
     let loginService: LoginService
+
+    @State private var cancellables = Set<AnyCancellable>()
+
+    // MARK: Views
 
     var body: some View {
         AuthenticationView(initialRequest: request,
                            completion: login)
         .edgesIgnoringSafeArea(.all)
     }
+
+    // MARK: Helpers
 
     private func login(code: String) {
         guard information == nil else { return }
