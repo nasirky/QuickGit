@@ -13,10 +13,10 @@ struct ReloadView<Model, ModelView: View>: View {
 
     // MARK: Stored properties
 
+    @Binding var model: Model?
     let action: AnyPublisher<Model, Never>
     let create: (Model) -> ModelView
 
-    @State private var model: Model?
     @State private var cancellables = Set<AnyCancellable>()
 
     // MARK: Views

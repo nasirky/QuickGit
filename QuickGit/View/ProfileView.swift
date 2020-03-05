@@ -19,21 +19,19 @@ struct ProfileView: View {
     let gitHubService: GitHubService
 
     @State private var profile: Profile?
-    @State private var cancellables = Set<AnyCancellable>()
     @State private var showLogoutAlert = false
 
     // MARK: Views
 
     var body: some View {
         NavigationView {
-            When(exists: profile,
-                 then: profileView,
-                 else: loadingView)
+            ReloadView(model: $profile,
+                       action: gitHubService.fetchProfile().ignoreFailure(),
+                       create: profileView)
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
         }
         .alert(isPresented: $showLogoutAlert, content: logoutAlert)
-        .onAppear(perform: reload)
     }
 
     private func logoutAlert() -> Alert {
@@ -162,14 +160,6 @@ struct ProfileView: View {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-
-    private func reload() {
-        gitHubService.fetchProfile()
-        .ignoreFailure()
-        .map(Optional.some)
-        .assign(to: \.profile, on: self)
-        .store(in: &cancellables)
     }
 
 }

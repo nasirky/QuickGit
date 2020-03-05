@@ -15,13 +15,13 @@ struct MainView: View {
 
     let gitHubService: GitHubService
 
-    @State private var repositories = [Repository]()
-    @State private var cancellables = Set<AnyCancellable>()
+    @State var repositories: [Repository]?
 
     // MARK: Views
 
     var body: some View {
-        ReloadView(action: gitHubService.fetchRepositories().ignoreFailure(),
+        ReloadView(model: $repositories,
+                   action: gitHubService.fetchRepositories().ignoreFailure(),
                    create: contentView)
     }
 

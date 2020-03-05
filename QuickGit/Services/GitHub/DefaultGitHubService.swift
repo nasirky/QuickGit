@@ -13,7 +13,7 @@ class DefaultGitHubService: GitHubService {
 
     // MARK: Nested types
 
-    private enum Endpoint {
+    private enum Endpoint: NetworkEndpoint {
         case profile
         case repositories
         case issues(Repository)
@@ -28,32 +28,45 @@ class DefaultGitHubService: GitHubService {
                     .appendingPathComponent("user")
             case .repositories:
                 return baseURL
-                    .appendingPathComponent("user/repos")
+                    .appendingPathComponent("user")
+                    .appendingPathComponent("repos")
             case .issues(let repo):
                 return baseURL
-                    .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/issues")
+                    .appendingPathComponent("repos")
+                    .appendingPathComponent(repo.owner.username)
+                    .appendingPathComponent(repo.name)
+                    .appendingPathComponent("issues")
             case .contributors(let repo):
                 return baseURL
-                    .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/contributors")
+                    .appendingPathComponent("repos")
+                    .appendingPathComponent(repo.owner.username)
+                    .appendingPathComponent(repo.name)
+                    .appendingPathComponent("contributors")
             case .pullRequest(let repo):
                 return baseURL
-                    .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/pulls")
+                    .appendingPathComponent("repos")
+                    .appendingPathComponent(repo.owner.username)
+                    .appendingPathComponent(repo.name)
+                    .appendingPathComponent("pulls")
             case .issueComments(let repo, let issue):
                 return Endpoint.issues(repo).url(for: baseURL)
-                    .appendingPathComponent("\(issue.number)/comments")
+                    .appendingPathComponent(issue.number.description)
+                    .appendingPathComponent("comments")
             }
         }
     }
 
     // MARK: Stored properties
 
-    private let session = URLSession.shared
     private let information: LoginInformation
 
-    private let decoder: JSONDecoder = {
+    private lazy var network: NetworkService<Endpoint> = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        return decoder
+        return NetworkService(
+            baseURL: Configuration.baseURL,
+            authorization: "token " + information.accessToken,
+            decoder: decoder)
     }()
 
     // MARK: Initialization
@@ -65,49 +78,28 @@ class DefaultGitHubService: GitHubService {
     // MARK: Methods
 
     func fetchProfile() -> AnyPublisher<Profile, Error> {
-        request(at: .profile)
+        network.request(at: .profile)
     }
 
     func fetchRepositories() -> AnyPublisher<[Repository], Error> {
-        request(at: .repositories)
+        network.request(at: .repositories)
     }
 
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error> {
-        request(at: .issues(repository))
+        network.request(at: .issues(repository))
     }
 
-    func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error> {
-        request(at: .issueComments(repository, issue))
+    func fetchComments(for issue: Issue,
+                       in repository: Repository) -> AnyPublisher<[IssueComment], Error> {
+        network.request(at: .issueComments(repository, issue))
     }
 
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error> {
-        request(at: .contributors(repository))
+        network.request(at: .contributors(repository))
     }
 
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error> {
-        request(at: .pullRequest(repository))
-    }
-
-    // MARK: Helpers
-
-    private func request(for endpoint: Endpoint) -> URLRequest {
-        let url = endpoint.url(for: Configuration.baseURL)
-        var request = URLRequest(url: url)
-        request.addValue("token \(information.accessToken)",
-                         forHTTPHeaderField: "Authorization")
-        return request
-    }
-
-    private func request<D: Decodable>(at endpoint: Endpoint,
-                                       for type: D.Type = D.self) -> AnyPublisher<D, Error> {
-        session
-            .dataTaskPublisher(for: request(for: endpoint))
-            .map(\.data)
-            .handleEvents(receiveOutput: { print(#function, endpoint, String(data: $0, encoding: .utf8) ?? "nil") })
-            .decode(type: type, decoder: decoder)
-            .receive(on: DispatchQueue.main)
-            .print()
-            .eraseToAnyPublisher()
+        network.request(at: .pullRequest(repository))
     }
 
 }

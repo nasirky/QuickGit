@@ -26,10 +26,13 @@ struct IssueView: View {
     let issue: Issue
     let gitHubService: GitHubService
 
+    @State private var comments: [IssueComment]?
+
     // MARK: Views
 
     var body: some View {
         ReloadView(
+            model: $comments,
             action: gitHubService.fetchComments(for: issue, in: repository).ignoreFailure(),
             create: contentView
         )

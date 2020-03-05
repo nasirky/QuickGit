@@ -10,6 +10,7 @@
 		50009068240EFE400008F865 /* Repository+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50009067240EFE400008F865 /* Repository+Mock.swift */; };
 		5000906C240F096A0008F865 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5000906B240F096A0008F865 /* ProfileImage.swift */; };
 		5013F19D240FA3A500E0BF9F /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013F19C240FA3A500E0BF9F /* PullRequest.swift */; };
+		9B4C26452411937000D2EC2B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C26442411937000D2EC2B /* NetworkService.swift */; };
 		9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B714240D144C001DD893 /* AppDelegate.swift */; };
 		9BA2B717240D144C001DD893 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B716240D144C001DD893 /* SceneDelegate.swift */; };
 		9BA2B71B240D1450001DD893 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA2B71A240D1450001DD893 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		50009067240EFE400008F865 /* Repository+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Mock.swift"; sourceTree = "<group>"; };
 		5000906B240F096A0008F865 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		5013F19C240FA3A500E0BF9F /* PullRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
+		9B4C26442411937000D2EC2B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		9BA2B711240D144C001DD893 /* QuickGit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickGit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BA2B714240D144C001DD893 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BA2B716240D144C001DD893 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				9BA2B728240D147D001DD893 /* GitHubService.swift */,
 				9BC8EB26240E69FC004F956C /* MockGitHubService.swift */,
 				9BC8EB24240E69CA004F956C /* DefaultGitHubService.swift */,
+				9B4C26442411937000D2EC2B /* NetworkService.swift */,
 			);
 			path = GitHub;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */,
 				9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */,
 				9BA2B731240D14D9001DD893 /* Issue.swift in Sources */,
+				9B4C26452411937000D2EC2B /* NetworkService.swift in Sources */,
 				9BE30390240FBBA800DED596 /* AsyncImage.swift in Sources */,
 				9BA2B73B240D2689001DD893 /* LoginView.swift in Sources */,
 				9BF48476241129700079A6AA /* OptionalType.swift in Sources */,

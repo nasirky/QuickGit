@@ -24,7 +24,7 @@ class MockGitHubService: GitHubService {
             bio: "...",
             followerCount: 19,
             followingCount: 13,
-            publicRepositoryCount: 7)
+            publicRepositoryCount: 4532)
 
         return .just(profile)
     }

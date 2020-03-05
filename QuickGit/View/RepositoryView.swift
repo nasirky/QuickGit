@@ -99,35 +99,31 @@ struct ContributorsView: View {
     let repository: Repository
     let gitHubService: GitHubService
 
-    @State private var contributors: [User] = []
-    @State private var cancellables = Set<AnyCancellable>()
+    @State private var contributors: [User]?
 
     // MARK: Views
 
     var body: some View {
-        VStack {
-                ForEach(contributors, id: \.id) { contributor in
-                    HStack {
-                        ProfileImage(url: contributor.avatarURL, size: 40)
-                        Text(contributor.username)
-                        Spacer()
-                         Text("\(contributor.contributions ?? 0) Contributions")
-                            .foregroundColor(.gray)
-                            .font(.caption)
-                    }
-                 }
-        }
-        .onAppear(perform: load)
+        let action = gitHubService.fetchContributors(for: repository).ignoreFailure()
+        return ReloadView(model: $contributors, action: action, create: contentView)
     }
 
-    // MARK: Helpers
+    private func contentView(for contributors: [User]) -> some View {
+        VStack {
+            ForEach(contributors) { contributor in
+                HStack {
+                    ProfileImage(url: contributor.avatarURL, size: 40)
 
-    private func load() {
-        gitHubService
-            .fetchContributors(for: repository)
-            .replaceError(with: [])
-            .assign(to: \.contributors, on: self)
-            .store(in: &cancellables)
+                    Text(contributor.username)
+
+                    Spacer()
+
+                    Text("\(contributor.contributions ?? 0) Contributions")
+                    .foregroundColor(.gray)
+                    .font(.caption)
+                }
+            }
+        }
     }
 
 }
@@ -139,19 +135,27 @@ struct IssuesView: View {
     let repository: Repository
     let gitHubService: GitHubService
 
-    @State private var issues: [Issue] = []
-    @State private var cancellables = Set<AnyCancellable>()
+    @State private var issues: [Issue]?
+
+    // MARK: Views
 
     var body: some View {
-        VStack {
-            ForEach(issues) { issue in
-                NavigationLink(destination: IssueView(repository: self.repository, issue: issue, gitHubService: self.gitHubService)) {
-                    self.cell(for: issue)
-
+        let action = gitHubService.fetchIssues(for: repository).ignoreFailure()
+        return ReloadView(model: $issues, action: action) { issues in
+            VStack {
+                ForEach(issues) { issue in
+                    NavigationLink(destination: self.destination(for: issue)) {
+                        self.cell(for: issue)
+                    }
                 }
             }
         }
-        .onAppear(perform: load)
+    }
+
+    private func destination(for issue: Issue) -> some View {
+        IssueView(repository: repository,
+                  issue: issue,
+                  gitHubService: gitHubService)
     }
 
     private func cell(for issue: Issue) -> some View {
@@ -171,44 +175,40 @@ struct IssuesView: View {
         .padding(.top, 16)
     }
 
-    private func load() {
-        gitHubService
-            .fetchIssues(for: repository)
-            .replaceError(with: [])
-            .assign(to: \.issues, on: self)
-            .store(in: &cancellables)
-    }
 }
 
 struct PullRequestsView: View {
+
+    // MARK: Stored properties
+
     let gitHubService: GitHubService
     let repository: Repository
 
-    @State var pullRequests: [PullRequest] = []
-    @State var cancellables = Set<AnyCancellable>()
+    @State private var requests: [PullRequest]?
+
+    // MARK: Views
 
     var body: some View {
-        VStack {
-            ForEach(pullRequests) { pullRequest in
-                VStack(alignment: .leading) {
-                    Text(pullRequest.title)
-
-                    Text(pullRequest.body)
-                        .font(.caption)
-
-                    Text("\(pullRequest.user.username) wants to add commits from \(pullRequest.head.reference) into \(pullRequest.base.reference).")
-                        .font(.caption)
-
+        let action = gitHubService.fetchPullRequest(for: repository).ignoreFailure()
+        return ReloadView(model: $requests, action: action) { pullRequests in
+            VStack {
+                ForEach(pullRequests) { pullRequest in
+                    self.cell(for: pullRequest)
                 }
             }
-        }.onAppear(perform: load)
+        }
     }
 
-    private func load() {
-        gitHubService
-            .fetchPullRequest(for: repository)
-            .replaceError(with: [])
-            .assign(to: \.pullRequests, on: self)
-            .store(in: &cancellables)
+    private func cell(for pullRequest: PullRequest) -> some View {
+        VStack(alignment: .leading) {
+            Text(pullRequest.title)
+
+            Text(pullRequest.body)
+                .font(.caption)
+
+            Text("\(pullRequest.user.username) wants to add commits from \(pullRequest.head.reference) into \(pullRequest.base.reference).")
+                .font(.caption)
+        }
     }
+
 }

@@ -10,11 +10,20 @@ import Combine
 import Foundation
 
 protocol GitHubService {
-    func fetchProfile() -> AnyPublisher<Profile, Error>
-    func fetchRepositories() -> AnyPublisher<[Repository], Error>
-    func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error>
 
+    // MARK: User
+
+    func fetchProfile() -> AnyPublisher<Profile, Error>
+
+    // MARK: Repository
+
+    func fetchRepositories() -> AnyPublisher<[Repository], Error>
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error>
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error>
+
+    // MARK: Repository - Issue
+
+    func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error>
     func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error>
+
 }

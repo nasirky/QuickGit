@@ -10,14 +10,22 @@ import Combine
 
 extension Publisher {
 
-    func mapResult() -> AnyPublisher<Result<Output, Failure>, Never> {
-        map(Result.success)
+    func mapToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
+        self
+        .map(Result.success)
         .catch { Just(Result.failure($0)) }
         .eraseToAnyPublisher()
     }
 
     func ignoreFailure() -> AnyPublisher<Output, Never> {
-        `catch` { _ in Empty() }
+        self
+        .catch { _ in Empty() }
+        .eraseToAnyPublisher()
+    }
+
+    func printOnFailure(_ prefix: String = #function) -> AnyPublisher<Output, Failure> {
+        self
+        .mapError { Swift.print(prefix + ":", $0); return $0 }
         .eraseToAnyPublisher()
     }
 
