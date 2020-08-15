@@ -14,7 +14,7 @@ struct HomeView: View {
 
     enum Tab {
         case profile
-        case main
+        case repositoryList
         case settings
     }
 
@@ -32,7 +32,7 @@ struct HomeView: View {
     var body: some View {
         TabView(selection: $selection) {
             profileTab
-            mainTab
+            repositoryListTab
             settingsTab
         }
     }
@@ -44,8 +44,8 @@ struct HomeView: View {
         }
     }
 
-    private var mainTab: some View {
-        tab(RepositoryList(gitHubService: gitHubService), tab: .main) { isSelected in
+    private var repositoryListTab: some View {
+        tab(RepositoryList(gitHubService: gitHubService), tab: .repositoryList) { isSelected in
             Image(systemName: isSelected ? "house.fill" : "house")
             Text("Main")
         }
