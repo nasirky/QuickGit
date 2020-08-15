@@ -25,7 +25,7 @@ struct HomeView: View {
     let loginService: LoginService
     let gitHubService: GitHubService
 
-    @State var selection = Tab.main
+    @State var selection = Tab.profile
 
     // MARK: Views
 
@@ -45,7 +45,7 @@ struct HomeView: View {
     }
 
     private var mainTab: some View {
-        tab(MainView(gitHubService: gitHubService), tab: .main) { isSelected in
+        tab(RepositoryList(gitHubService: gitHubService), tab: .main) { isSelected in
             Image(systemName: isSelected ? "house.fill" : "house")
             Text("Main")
         }

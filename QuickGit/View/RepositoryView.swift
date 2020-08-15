@@ -34,14 +34,9 @@ struct RepositoryView: View {
             Section(header: Text("Pull Requests")) {
                 PullRequestsView(gitHubService: gitHubService, repository: repository)
             }
-
-            Section(header: Text("Issues")) {
-                IssuesView(repository: repository, gitHubService: gitHubService)
-            }
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(repository.name), displayMode: .inline)
-//        .environment(\.horizontalSizeClass, .regular)
     }
 
     private var header: some View {

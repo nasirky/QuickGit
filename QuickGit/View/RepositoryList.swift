@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  RepositoryList.swift
 //  QuickGit
 //
 //  Created by Paul Kraft on 02.03.20.
@@ -9,7 +9,7 @@
 import Combine
 import SwiftUI
 
-struct MainView: View {
+struct RepositoryList: View {
 
     // MARK: Stored properties
 

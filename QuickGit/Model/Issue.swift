@@ -16,7 +16,6 @@ struct Issue: Codable, Identifiable {
     let user: User
     let number: Int
     let assignees: [User]?
-
 }
 
 struct IssueComment: Codable, Identifiable {

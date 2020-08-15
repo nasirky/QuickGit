@@ -26,7 +26,7 @@
 		9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B73C240D27AB001DD893 /* ContentView.swift */; };
 		9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B73E240D2813001DD893 /* LoginService.swift */; };
 		9BA2B741240D28CC001DD893 /* String+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B740240D28CC001DD893 /* String+Extras.swift */; };
-		9BA2B744240D2A16001DD893 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B743240D2A16001DD893 /* MainView.swift */; };
+		9BA2B744240D2A16001DD893 /* RepositoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B743240D2A16001DD893 /* RepositoryList.swift */; };
 		9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B745240D2C68001DD893 /* SettingsView.swift */; };
 		9BA2B748240D3224001DD893 /* Publisher+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B747240D3224001DD893 /* Publisher+Extras.swift */; };
 		9BA2B74C240D441A001DD893 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA2B74B240D441A001DD893 /* Profile.swift */; };
@@ -70,7 +70,7 @@
 		9BA2B73C240D27AB001DD893 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9BA2B73E240D2813001DD893 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		9BA2B740240D28CC001DD893 /* String+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extras.swift"; sourceTree = "<group>"; };
-		9BA2B743240D2A16001DD893 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9BA2B743240D2A16001DD893 /* RepositoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryList.swift; sourceTree = "<group>"; };
 		9BA2B745240D2C68001DD893 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9BA2B747240D3224001DD893 /* Publisher+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extras.swift"; sourceTree = "<group>"; };
 		9BA2B74B240D441A001DD893 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 				9BA2B736240D182D001DD893 /* HomeView.swift */,
 				9BE30393240FBE9300DED596 /* IssueView.swift */,
 				9BA2B73A240D2689001DD893 /* LoginView.swift */,
-				9BA2B743240D2A16001DD893 /* MainView.swift */,
+				9BA2B743240D2A16001DD893 /* RepositoryList.swift */,
 				9BA2B738240D267E001DD893 /* ProfileView.swift */,
 				9BC8EB20240E5C5A004F956C /* RepositoryView.swift */,
 				9BA2B745240D2C68001DD893 /* SettingsView.swift */,
@@ -323,7 +323,7 @@
 				9BC8EB31240E88B0004F956C /* DefaultLoginService.swift in Sources */,
 				9BA2B739240D267E001DD893 /* ProfileView.swift in Sources */,
 				50009068240EFE400008F865 /* Repository+Mock.swift in Sources */,
-				9BA2B744240D2A16001DD893 /* MainView.swift in Sources */,
+				9BA2B744240D2A16001DD893 /* RepositoryList.swift in Sources */,
 				9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */,
 				9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */,
 				9BA2B731240D14D9001DD893 /* Issue.swift in Sources */,
