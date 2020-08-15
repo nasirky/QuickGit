@@ -8,6 +8,20 @@
 
 import Foundation
 
-struct User: Codable {
-    
+struct User: Codable, Identifiable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case username = "login"
+        case avatarURL = "avatar_url"
+        case profileURL = "url"
+        case contributions
+        case reposURL = "repos_url"
+    }
+
+    let id: Int
+    let username: String
+    let avatarURL: String
+    let profileURL: String
+    let contributions: Int?
+    let reposURL: String
 }

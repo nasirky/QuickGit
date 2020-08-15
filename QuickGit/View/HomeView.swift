@@ -10,31 +10,52 @@ import SwiftUI
 
 struct HomeView: View {
 
+    // MARK: Nested types
+
     enum Tab {
         case profile
         case main
         case settings
     }
 
-    var information: LoginInformation
+    // MARK: Stored properties
+
+    @Binding var loginInformation: LoginInformation?
+
+    let loginService: LoginService
+    let gitHubService: GitHubService
+
     @State var selection = Tab.main
+
+    // MARK: Views
 
     var body: some View {
         TabView(selection: $selection) {
-            tab(ProfileView(), tab: .profile) { isSelected in
-                Image(systemName: isSelected ? "person.fill" : "person")
-                Text("Profile")
-            }
+            profileTab
+            mainTab
+            settingsTab
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
 
-            tab(MainView(), tab: .main) { isSelected in
-                Image(systemName: isSelected ? "house.fill" : "house")
-                Text("Main")
-            }
+    private var profileTab: some View {
+        tab(ProfileView(loginInformation: $loginInformation, loginService: loginService, gitHubService: gitHubService), tab: .profile) { isSelected in
+            Image(systemName: isSelected ? "person.fill" : "person")
+            Text("Profile")
+        }
+    }
 
-            tab(SettingsView(), tab: .settings) { _ in
-                Image(systemName: "gear")
-                Text("Settings")
-            }
+    private var mainTab: some View {
+        tab(MainView(gitHubService: gitHubService), tab: .main) { isSelected in
+            Image(systemName: isSelected ? "house.fill" : "house")
+            Text("Main")
+        }
+    }
+
+    private var settingsTab: some View {
+        tab(SettingsView(), tab: .settings) { _ in
+            Image(systemName: "gear")
+            Text("Settings")
         }
     }
 
@@ -46,4 +67,5 @@ struct HomeView: View {
         view.tag(tab)
             .tabItem { tabItem(self.selection == tab) }
     }
+
 }
