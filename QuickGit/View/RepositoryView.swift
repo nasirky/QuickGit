@@ -26,6 +26,11 @@ struct RepositoryView: View {
                 ContributorsView(repository: repository, gitHubService: gitHubService)
             }
 
+            Section(header: Text("Languages")) {
+                LanguagesView(repository: repository, gitHubService: gitHubService)
+            }
+
+
             Section(header: Text("Pull Requests")) {
                 PullRequestsView(gitHubService: gitHubService, repository: repository)
             }
@@ -36,6 +41,7 @@ struct RepositoryView: View {
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(repository.name), displayMode: .inline)
+//        .environment(\.horizontalSizeClass, .regular)
     }
 
     private var header: some View {
@@ -211,4 +217,42 @@ struct PullRequestsView: View {
         }
     }
 
+}
+
+struct LanguagesView: View {
+    let repository: Repository
+    let gitHubService: GitHubService
+
+    @State var languages: [String:Int] = [:]
+    @State var cancellables = Set<AnyCancellable>()
+
+    var body: some View {
+        let sortedKeys: [String] = languages.sorted { $0.value > $1.value }.map { $0.key }
+        let totalLines = languages.reduce(0) { result, keyValue in result + keyValue.value }
+
+        return VStack {
+            ForEach(sortedKeys, id: \.self) { key in
+                HStack {
+                    Text(key)
+                    Spacer()
+                    Text(self.formattedPercentage(lines: self.languages[key] ?? 0, totalLines: totalLines))
+                }
+            .padding()
+            }
+        }.onAppear(perform: load)
+    }
+
+    private func formattedPercentage(lines: Int, totalLines: Int) -> String {
+        let percentage = Double(lines) / Double(totalLines) * 100
+
+        return String(format: "%.1f%%", percentage)
+    }
+
+    private func load() {
+        gitHubService
+            .fetchLanguages(for: repository)
+            .replaceError(with: [:])
+            .assign(to: \.languages, on: self)
+            .store(in: &cancellables)
+    }
 }

@@ -20,6 +20,7 @@ class DefaultGitHubService: GitHubService {
         case contributors(Repository)
         case pullRequest(Repository)
         case issueComments(Repository, Issue)
+        case languages(Repository)
 
         func url(for baseURL: URL) -> URL {
             switch self {
@@ -52,6 +53,9 @@ class DefaultGitHubService: GitHubService {
                 return Endpoint.issues(repo).url(for: baseURL)
                     .appendingPathComponent(issue.number.description)
                     .appendingPathComponent("comments")
+            case .languages(let repo):
+                return baseURL
+                    .appendingPathComponent("repos/\(repo.owner.username)/\(repo.name)/languages")
             }
         }
     }
@@ -100,6 +104,11 @@ class DefaultGitHubService: GitHubService {
 
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error> {
         network.request(at: .pullRequest(repository))
+    }
+
+
+    func fetchLanguages(for repository: Repository) -> AnyPublisher<[String : Int], Error> {
+        network.request(at: .languages(repository))
     }
 
 }

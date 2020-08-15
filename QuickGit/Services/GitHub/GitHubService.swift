@@ -20,10 +20,10 @@ protocol GitHubService {
     func fetchRepositories() -> AnyPublisher<[Repository], Error>
     func fetchContributors(for repository: Repository) -> AnyPublisher<[User], Error>
     func fetchPullRequest(for repository: Repository) -> AnyPublisher<[PullRequest], Error>
+    func fetchLanguages(for repository: Repository) -> AnyPublisher<[String: Int], Error>
 
     // MARK: Repository - Issue
 
     func fetchIssues(for repository: Repository) -> AnyPublisher<[Issue], Error>
     func fetchComments(for issue: Issue, in repository: Repository) -> AnyPublisher<[IssueComment], Error>
-
 }

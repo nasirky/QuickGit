@@ -10,7 +10,6 @@ import Combine
 import Foundation
 
 class MockGitHubService: GitHubService {
-
     func fetchProfile() -> AnyPublisher<Profile, Error> {
         let profile = Profile(
             id: 1,
@@ -51,4 +50,7 @@ class MockGitHubService: GitHubService {
         .just([])
     }
 
+    func fetchLanguages(for repository: Repository) -> AnyPublisher<[String : Int], Error> {
+        .just([:])
+    }
 }
