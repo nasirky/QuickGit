@@ -35,7 +35,6 @@ struct HomeView: View {
             mainTab
             settingsTab
         }
-        .edgesIgnoringSafeArea(.top)
     }
 
     private var profileTab: some View {
