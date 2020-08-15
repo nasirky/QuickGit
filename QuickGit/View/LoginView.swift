@@ -19,11 +19,7 @@ struct LoginView: View {
 
     // MARK: Stored properties
 
-    @Binding var information: LoginInformation?
-
-    let loginService: LoginService
-
-    @State private var cancellables = Set<AnyCancellable>()
+    @ObservedObject var store: AppStore
 
     // MARK: Views
 
@@ -74,13 +70,7 @@ struct LoginView: View {
     // MARK: Helpers
 
     private func login(code: String) {
-        guard information == nil else { return }
-
-        loginService.login(code: code)
-        .ignoreFailure()
-        .map(Optional.some)
-        .assign(to: \.information, on: self)
-        .store(in: &cancellables)
+        store.send(.login(code: code))
     }
 
 }

@@ -13,10 +13,7 @@ struct ProfileView: View {
 
     // MARK: Stored properties
 
-    @Binding var loginInformation: LoginInformation?
-
-    let loginService: LoginService
-    let gitHubService: GitHubService
+    @ObservedObject var store: AppStore
 
     @State private var profile: Profile?
     @State private var showLogoutAlert = false
@@ -26,7 +23,7 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             ReloadView(model: $profile,
-                       action: gitHubService.fetchProfile().ignoreFailure(),
+                       action: store.state.githubService!.fetchProfile().ignoreFailure(),
                        create: profileView)
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
@@ -151,8 +148,7 @@ struct ProfileView: View {
     // MARK: Helpers
 
     private func logout() {
-        self.loginService.logout()
-        self.loginInformation = nil
+        store.send(.logout)
     }
 
     private func openInBrowser() {

@@ -39,6 +39,8 @@
 		9BC8EB31240E88B0004F956C /* DefaultLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */; };
 		9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */; };
 		9BC8EB37240E8E38004F956C /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC8EB36240E8E38004F956C /* KeychainItem.swift */; };
+		9BE09ED724E8814000F03DD5 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE09ED624E8814000F03DD5 /* Store.swift */; };
+		9BE09ED924E881C700F03DD5 /* Store+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE09ED824E881C700F03DD5 /* Store+App.swift */; };
 		9BE30390240FBBA800DED596 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE3038F240FBBA800DED596 /* AsyncImage.swift */; };
 		9BE30392240FBD2F00DED596 /* CGSize+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE30391240FBD2F00DED596 /* CGSize+Extras.swift */; };
 		9BE30394240FBE9300DED596 /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE30393240FBE9300DED596 /* IssueView.swift */; };
@@ -83,6 +85,8 @@
 		9BC8EB30240E88B0004F956C /* DefaultLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginService.swift; sourceTree = "<group>"; };
 		9BC8EB33240E8BB9004F956C /* KeychainPasswordItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPasswordItem.swift; sourceTree = "<group>"; };
 		9BC8EB36240E8E38004F956C /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
+		9BE09ED624E8814000F03DD5 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		9BE09ED824E881C700F03DD5 /* Store+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+App.swift"; sourceTree = "<group>"; };
 		9BE3038F240FBBA800DED596 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		9BE30391240FBD2F00DED596 /* CGSize+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Extras.swift"; sourceTree = "<group>"; };
 		9BE30393240FBE9300DED596 /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				9BA2B714240D144C001DD893 /* AppDelegate.swift */,
 				9BA2B716240D144C001DD893 /* SceneDelegate.swift */,
 				9BC8EB2E240E8832004F956C /* Configuration.swift */,
+				9BE09ED624E8814000F03DD5 /* Store.swift */,
+				9BE09ED824E881C700F03DD5 /* Store+App.swift */,
 				9BA2B71A240D1450001DD893 /* Assets.xcassets */,
 				9BA2B71F240D1450001DD893 /* LaunchScreen.storyboard */,
 				9BA2B722240D1450001DD893 /* Info.plist */,
@@ -326,6 +332,7 @@
 				9BA2B744240D2A16001DD893 /* RepositoryList.swift in Sources */,
 				9BC8EB35240E8BBA004F956C /* KeychainPasswordItem.swift in Sources */,
 				9BA2B715240D144C001DD893 /* AppDelegate.swift in Sources */,
+				9BE09ED924E881C700F03DD5 /* Store+App.swift in Sources */,
 				9BA2B731240D14D9001DD893 /* Issue.swift in Sources */,
 				9B4C26452411937000D2EC2B /* NetworkService.swift in Sources */,
 				9BE30390240FBBA800DED596 /* AsyncImage.swift in Sources */,
@@ -338,6 +345,7 @@
 				9BA2B746240D2C68001DD893 /* SettingsView.swift in Sources */,
 				5013F19D240FA3A500E0BF9F /* PullRequest.swift in Sources */,
 				9BC8EB2F240E8832004F956C /* Configuration.swift in Sources */,
+				9BE09ED724E8814000F03DD5 /* Store.swift in Sources */,
 				9BA2B72F240D14CA001DD893 /* User.swift in Sources */,
 				9BA2B73F240D2813001DD893 /* LoginService.swift in Sources */,
 				9BA2B73D240D27AB001DD893 /* ContentView.swift in Sources */,

@@ -20,10 +20,7 @@ struct HomeView: View {
 
     // MARK: Stored properties
 
-    @Binding var loginInformation: LoginInformation?
-
-    let loginService: LoginService
-    let gitHubService: GitHubService
+    @ObservedObject var store: AppStore
 
     @State var selection = Tab.profile
 
@@ -38,14 +35,14 @@ struct HomeView: View {
     }
 
     private var profileTab: some View {
-        tab(ProfileView(loginInformation: $loginInformation, loginService: loginService, gitHubService: gitHubService), tab: .profile) { isSelected in
+        tab(ProfileView(store: store), tab: .profile) { isSelected in
             Image(systemName: isSelected ? "person.fill" : "person")
             Text("Profile")
         }
     }
 
     private var repositoryListTab: some View {
-        tab(RepositoryList(gitHubService: gitHubService), tab: .repositoryList) { isSelected in
+        tab(RepositoryList(gitHubService: store.state.githubService!), tab: .repositoryList) { isSelected in
             Image(systemName: isSelected ? "house.fill" : "house")
             Text("Main")
         }
