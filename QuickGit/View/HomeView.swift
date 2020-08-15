@@ -42,7 +42,7 @@ struct HomeView: View {
     }
 
     private var repositoryListTab: some View {
-        tab(RepositoryList(gitHubService: store.state.githubService!), tab: .repositoryList) { isSelected in
+        tab(RepositoryList(store: store), tab: .repositoryList) { isSelected in
             Image(systemName: isSelected ? "house.fill" : "house")
             Text("Main")
         }

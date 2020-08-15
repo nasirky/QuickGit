@@ -13,8 +13,9 @@ struct RepositoryView: View {
 
     // MARK: Stored properties
 
+    @ObservedObject var store: AppStore
+
     let repository: Repository
-    let gitHubService: GitHubService
 
     // MARK: Views
 
@@ -23,18 +24,19 @@ struct RepositoryView: View {
             header
 
             Section(header: Text("Contributors")) {
-                ContributorsView(repository: repository, gitHubService: gitHubService)
+                ContributorsView(store: store, repository: repository)
             }
 
             Section(header: Text("Languages")) {
-                LanguagesView(repository: repository, gitHubService: gitHubService)
+                LanguagesView(store: store, repository: repository)
             }
 
 
             Section(header: Text("Pull Requests")) {
-                PullRequestsView(gitHubService: gitHubService, repository: repository)
+                PullRequestsView(store: store, repository: repository)
             }
         }
+        .onDisappear { self.store.send(.clearSelectedRepository) }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(Text(repository.name), displayMode: .inline)
     }
@@ -97,16 +99,15 @@ struct ContributorsView: View {
 
     // MARK: Stored properties
 
-    let repository: Repository
-    let gitHubService: GitHubService
+    @ObservedObject var store: AppStore
 
-    @State private var contributors: [User]?
+    let repository: Repository
 
     // MARK: Views
 
     var body: some View {
-        let action = gitHubService.fetchContributors(for: repository).ignoreFailure()
-        return ReloadView(model: $contributors, action: action, create: contentView)
+        contentView(for: store.state.selectedRepositoryContributors)
+            .onAppear { self.store.send(.reloadContributors(self.repository)) }
     }
 
     private func contentView(for contributors: [User]) -> some View {
@@ -133,30 +134,25 @@ struct IssuesView: View {
 
     // MARK: Stored properties
 
-    let repository: Repository
-    let gitHubService: GitHubService
+    @ObservedObject var store: AppStore
 
-    @State private var issues: [Issue]?
+    let repository: Repository
 
     // MARK: Views
 
     var body: some View {
-        let action = gitHubService.fetchIssues(for: repository).ignoreFailure()
-        return ReloadView(model: $issues, action: action) { issues in
-            VStack {
-                ForEach(issues) { issue in
-                    NavigationLink(destination: self.destination(for: issue)) {
-                        self.cell(for: issue)
-                    }
+        VStack {
+            ForEach(store.state.selectedRepositoryIssues) { issue in
+                NavigationLink(destination: self.destination(for: issue)) {
+                    self.cell(for: issue)
                 }
             }
         }
+        .onAppear { self.store.send(.reloadIssues(self.repository)) }
     }
 
     private func destination(for issue: Issue) -> some View {
-        IssueView(repository: repository,
-                  issue: issue,
-                  gitHubService: gitHubService)
+        IssueView(store: store, repository: repository, issue: issue)
     }
 
     private func cell(for issue: Issue) -> some View {
@@ -182,20 +178,15 @@ struct PullRequestsView: View {
 
     // MARK: Stored properties
 
-    let gitHubService: GitHubService
+    @ObservedObject var store: AppStore
     let repository: Repository
-
-    @State private var requests: [PullRequest]?
 
     // MARK: Views
 
     var body: some View {
-        let action = gitHubService.fetchPullRequest(for: repository).ignoreFailure()
-        return ReloadView(model: $requests, action: action) { pullRequests in
-            VStack {
-                ForEach(pullRequests) { pullRequest in
-                    self.cell(for: pullRequest)
-                }
+        VStack {
+            ForEach(store.state.selectedRepositoryPullRequests) { pullRequest in
+                self.cell(for: pullRequest)
             }
         }
     }
@@ -215,13 +206,12 @@ struct PullRequestsView: View {
 }
 
 struct LanguagesView: View {
-    let repository: Repository
-    let gitHubService: GitHubService
 
-    @State var languages: [String:Int] = [:]
-    @State var cancellables = Set<AnyCancellable>()
+    @ObservedObject var store: AppStore
+    let repository: Repository
 
     var body: some View {
+        let languages = store.state.selectedRepositoryLanguages
         let sortedKeys: [String] = languages.sorted { $0.value > $1.value }.map { $0.key }
         let totalLines = languages.reduce(0) { result, keyValue in result + keyValue.value }
 
@@ -230,9 +220,9 @@ struct LanguagesView: View {
                 HStack {
                     Text(key)
                     Spacer()
-                    Text(self.formattedPercentage(lines: self.languages[key] ?? 0, totalLines: totalLines))
+                    Text(self.formattedPercentage(lines: languages[key] ?? 0, totalLines: totalLines))
                 }
-            .padding()
+                .padding()
             }
         }.onAppear(perform: load)
     }
@@ -244,10 +234,6 @@ struct LanguagesView: View {
     }
 
     private func load() {
-        gitHubService
-            .fetchLanguages(for: repository)
-            .replaceError(with: [:])
-            .assign(to: \.languages, on: self)
-            .store(in: &cancellables)
+        store.send(.reloadLanguages(repository))
     }
 }

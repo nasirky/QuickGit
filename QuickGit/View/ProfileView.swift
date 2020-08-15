@@ -14,17 +14,17 @@ struct ProfileView: View {
     // MARK: Stored properties
 
     @ObservedObject var store: AppStore
-
-    @State private var profile: Profile?
     @State private var showLogoutAlert = false
 
     // MARK: Views
 
     var body: some View {
         NavigationView {
-            ReloadView(model: $profile,
-                       action: store.state.githubService!.fetchProfile().ignoreFailure(),
-                       create: profileView)
+            Group {
+                store.state.profile
+                    .map(profileView)
+            }
+            .onAppear { self.store.send(.reloadProfile) }
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
         }
@@ -152,7 +152,7 @@ struct ProfileView: View {
     }
 
     private func openInBrowser() {
-        guard let url = profile.flatMap({ URL(string: $0.htmlURL) }) else {
+        guard let url = store.state.profile.flatMap({ URL(string: $0.htmlURL) }) else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)

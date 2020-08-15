@@ -13,16 +13,13 @@ struct RepositoryList: View {
 
     // MARK: Stored properties
 
-    let gitHubService: GitHubService
-
-    @State var repositories: [Repository]?
+    @ObservedObject var store: AppStore
 
     // MARK: Views
 
     var body: some View {
-        ReloadView(model: $repositories,
-                   action: gitHubService.fetchRepositories().ignoreFailure(),
-                   create: contentView)
+        contentView(for: store.state.repositories)
+            .onAppear { self.store.send(.reloadRepositories) }
     }
 
     private func contentView(for repositories: [Repository]) -> some View {
@@ -35,7 +32,7 @@ struct RepositoryList: View {
     }
 
     private func cell(for repository: Repository) -> some View {
-        let destination = RepositoryView(repository: repository, gitHubService: gitHubService)
+        let destination = RepositoryView(store: store, repository: repository)
         return NavigationLink(destination: destination) {
             VStack(alignment: .leading) {
                 Text(repository.fullName)

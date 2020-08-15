@@ -22,20 +22,17 @@ struct IssueView: View {
 
     // MARK: Stored properties
 
+    @ObservedObject var store: AppStore
+
     let repository: Repository
     let issue: Issue
-    let gitHubService: GitHubService
-
-    @State private var comments: [IssueComment]?
 
     // MARK: Views
 
     var body: some View {
-        ReloadView(
-            model: $comments,
-            action: gitHubService.fetchComments(for: issue, in: repository).ignoreFailure(),
-            create: contentView
-        )
+        contentView(for: store.state.selectedIssueComments)
+        .onAppear { self.store.send(.reloadComments(self.repository, self.issue)) }
+        .onDisappear { self.store.send(.clearSelectedIssueComments) }
     }
 
     private func contentView(for comments: [IssueComment]) -> some View {
