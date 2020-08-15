@@ -19,10 +19,10 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-            if store.state.githubService == nil {
-                LoginView(store: store)
-            } else {
+            if store.state.isLoggedIn {
                 HomeView(store: store)
+            } else {
+                LoginView(store: store)
             }
         }
         .onAppear(perform: storedLogin)

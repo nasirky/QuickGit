@@ -24,6 +24,10 @@ struct AppState {
 
     var selectedIssueComments = [IssueComment]()
 
+    var isLoggedIn: Bool {
+        githubService != nil
+    }
+
 }
 
 enum AppAction {
