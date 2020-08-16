@@ -27,13 +27,13 @@ class HomeViewModel: ViewModel<HomeViewModel.Input, HomeViewModel.State> {
         case .reloadProfile:
             gitHubService.fetchProfile()
                 .ignoreFailure()
-                .sink { profile in self.state.profile = profile }
+                .sink { [unowned self] profile in self.state.profile = profile }
                 .store(in: &cancellables)
             
         case .reloadRepositories:
             gitHubService.fetchRepositories()
                 .ignoreFailure()
-                .sink { repositories in
+                .sink { [unowned self] repositories in
                     self.state.repositoryViewModels = repositories.map {
                         RepositoryViewViewModel(repository: $0, gitHubService: self.gitHubService)
                     }

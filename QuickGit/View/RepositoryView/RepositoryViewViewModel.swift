@@ -24,22 +24,22 @@ class RepositoryViewViewModel: ViewModel<RepositoryViewViewModel.Input, Reposito
         case .reloadIssues:
             gitHubService.fetchIssues(for: state.repository)
                 .ignoreFailure()
-                .sink { issues in self.state.issues = issues }
+                .sink { [unowned self] issues in self.state.issues = issues }
                 .store(in: &cancellables)
         case .reloadContributors:
             gitHubService.fetchContributors(for: state.repository)
                 .ignoreFailure()
-                .sink { contributors in self.state.contributors = contributors }
+                .sink { [unowned self] contributors in self.state.contributors = contributors }
                 .store(in: &cancellables)
         case .reloadPullRequests:
             gitHubService.fetchPullRequest(for: state.repository)
                 .ignoreFailure()
-                .sink { pullRequests in self.state.pullRequests = pullRequests }
+                .sink { [unowned self] pullRequests in self.state.pullRequests = pullRequests }
                 .store(in: &cancellables)
         case .reloadLanguages:
             gitHubService.fetchLanguages(for: state.repository)
                 .ignoreFailure()
-                .sink { languages in self.state.languages = languages }
+                .sink { [unowned self]languages in self.state.languages = languages }
                 .store(in: &cancellables)
         case .reloadComments:
             return

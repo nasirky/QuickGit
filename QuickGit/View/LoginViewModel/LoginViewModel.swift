@@ -22,7 +22,7 @@ class LoginViewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State> {
             case .storedLogin:
                 return loginService.storedLogin()
                     .ignoreFailure()
-                    .sink { information in
+                    .sink { [unowned self] information in
                         let githubService = DefaultGitHubService(information: information)
                         self.state.homeViewModel = HomeViewModel(parentViewModel: self, gitHubService: githubService)
                     }
@@ -30,7 +30,7 @@ class LoginViewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State> {
             case let .login(code):
                 return loginService.login(code: code)
                     .ignoreFailure()
-                    .sink { information in
+                    .sink { [unowned self] information in
                             let githubService = DefaultGitHubService(information: information)
                         self.state.homeViewModel = HomeViewModel(parentViewModel: self, gitHubService: githubService)
                     }
