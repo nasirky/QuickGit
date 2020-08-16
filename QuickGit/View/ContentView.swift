@@ -20,9 +20,9 @@ struct ContentView: View {
     var body: some View {
         Group {
             if store.state.isLoggedIn {
-                LoginView(store: store)
-            } else {
                 HomeView(store: store)
+            } else {
+                LoginView(store: store)
             }
         }
         .onAppear(perform: storedLogin)
