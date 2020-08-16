@@ -33,7 +33,7 @@ struct Profile: Codable {
     var login: String
     var avatarURL: String?
     var htmlURL: String
-    var name: String
+    var name: String?
     var company: String?
     var location: String?
     var email: String?
@@ -42,4 +42,9 @@ struct Profile: Codable {
     var followingCount: Int
     var publicRepositoryCount: Int
 
+    // MARK: Computed properties
+
+    var nameOrDefault: String {
+        name ?? "-"
+    }
 }

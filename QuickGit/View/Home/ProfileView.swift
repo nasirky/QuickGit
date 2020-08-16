@@ -104,7 +104,7 @@ struct ProfileView: View {
             ProfileImage(url: profile.avatarURL, size: 80)
 
             VStack {
-                Text(profile.name)
+                Text(profile.nameOrDefault)
                 .font(.title)
 
                 Text(profile.login)
