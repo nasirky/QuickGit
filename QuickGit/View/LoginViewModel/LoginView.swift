@@ -19,7 +19,7 @@ struct LoginView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
+    @ObservedObject var viewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State>
 
     // MARK: Views
 
@@ -70,7 +70,7 @@ struct LoginView: View {
     // MARK: Helpers
 
     private func login(code: String) {
-        store.send(.login(code: code, store: store))
+        viewModel.trigger(.login(code: code))
     }
 
 }

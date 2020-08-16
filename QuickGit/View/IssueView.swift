@@ -22,17 +22,15 @@ struct IssueView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
-    let repository: Repository
     let issue: Issue
 
     // MARK: Views
 
     var body: some View {
-        contentView(for: store.state.selectedIssueComments)
-        .onAppear { self.store.send(.reloadComments(self.repository, self.issue)) }
-        .onDisappear { self.store.send(.clearSelectedIssueComments) }
+        contentView(for: viewModel.state.issueComments)
+        .onAppear { self.viewModel.trigger(.reloadComments(self.issue)) }
     }
 
     private func contentView(for comments: [IssueComment]) -> some View {

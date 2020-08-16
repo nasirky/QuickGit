@@ -9,7 +9,11 @@
 import Foundation
 import Combine
 
-class ViewModel<Input, State>: ObservableObject {
+class ViewModel<Input, State>: ObservableObject, Identifiable {
+
+    var id: ObjectIdentifier {
+        ObjectIdentifier(self)
+    }
 
     @Published var state: State
 

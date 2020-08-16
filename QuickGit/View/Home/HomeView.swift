@@ -20,8 +20,7 @@ struct HomeView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
-    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, Profile?>
+    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, HomeViewModel.State>
 
     @State var selection = Tab.profile
 
@@ -44,7 +43,7 @@ struct HomeView: View {
     }
 
     private var repositoryListTab: some View {
-        tab(RepositoryList(store: store), tab: .repositoryList) { isSelected in
+        tab(RepositoryList(viewModel: viewModel), tab: .repositoryList) { isSelected in
             Image(systemName: isSelected ? "house.fill" : "house")
             Text("Main")
         }

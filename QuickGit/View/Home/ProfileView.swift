@@ -13,7 +13,7 @@ struct ProfileView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, Profile?>
+    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, HomeViewModel.State>
     @State private var showLogoutAlert = false
 
     // MARK: Views
@@ -21,7 +21,7 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             Group {
-                viewModel.state.map(profileView)
+                viewModel.state.profile.map(profileView)
             }
             .onAppear { self.viewModel.trigger(.reloadProfile) }
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
@@ -151,10 +151,10 @@ struct ProfileView: View {
     }
 
     private func openInBrowser() {
-//        guard let url = store.state.profile.flatMap({ URL(string: $0.htmlURL) }) else {
-//            return
-//        }
-//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        guard let url = viewModel.state.profile.flatMap({ URL(string: $0.htmlURL) }) else {
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
 }

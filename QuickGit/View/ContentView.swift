@@ -13,16 +13,16 @@ struct ContentView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
+    @ObservedObject var viewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State>
 
     // MARK: Views
 
     var body: some View {
         Group {
-            if store.state.isLoggedIn {
-                HomeView(store: store, viewModel: store.state.homeViewModel!)
+            if viewModel.state.isLoggedIn {
+                HomeView(viewModel: viewModel.state.homeViewModel!)
             } else {
-                LoginView(store: store)
+                LoginView(viewModel: viewModel)
             }
         }
         .onAppear(perform: storedLogin)
@@ -32,7 +32,7 @@ struct ContentView: View {
     // MARK: Helpers
 
     private func storedLogin() {
-        store.send(.storedLogin(store: store))
+        viewModel.trigger(.storedLogin)
     }
 
 }

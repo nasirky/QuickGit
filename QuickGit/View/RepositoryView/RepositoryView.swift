@@ -13,9 +13,7 @@ struct RepositoryView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
-
-    let repository: Repository
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
     // MARK: Views
 
@@ -24,26 +22,25 @@ struct RepositoryView: View {
             header
 
             Section(header: Text("Contributors")) {
-                ContributorsView(store: store, repository: repository)
+                ContributorsView(viewModel: viewModel)
             }
 
             Section(header: Text("Languages")) {
-                LanguagesView(store: store, repository: repository)
+                LanguagesView(viewModel: viewModel)
             }
 
 
             Section(header: Text("Pull Requests")) {
-                PullRequestsView(store: store, repository: repository)
+                PullRequestsView(viewModel: viewModel)
             }
         }
-        .onDisappear { self.store.send(.clearSelectedRepository) }
         .listStyle(GroupedListStyle())
-        .navigationBarTitle(Text(repository.name), displayMode: .inline)
+        .navigationBarTitle(Text(viewModel.state.repository.name), displayMode: .inline)
     }
 
     private var header: some View {
         VStack(alignment: .leading) {
-            Text(repository.description ?? "-")
+            Text(viewModel.state.repository.description ?? "-")
             .font(.caption)
             .foregroundColor(.gray)
 
@@ -57,7 +54,7 @@ struct RepositoryView: View {
     }
 
     private var topicSection: some View {
-        repository.topics.map { topics in
+        viewModel.state.repository.topics.map { topics in
             ScrollView {
                 HStack {
                     ForEach(topics) { topic in
@@ -74,11 +71,11 @@ struct RepositoryView: View {
     private var statisticsSection: some View {
         HStack {
             Spacer()
-            statisticsCell(title: "Watchers", value: "\(repository.watchersCount ?? 0)")
+            statisticsCell(title: "Watchers", value: "\(viewModel.state.repository.watchersCount ?? 0)")
             Spacer()
-            statisticsCell(title: "Stars", value: "\(repository.starsCount ?? 0)")
+            statisticsCell(title: "Stars", value: "\(viewModel.state.repository.starsCount ?? 0)")
             Spacer()
-            statisticsCell(title: "Forks", value: "\(repository.forksCount ?? 0)")
+            statisticsCell(title: "Forks", value: "\(viewModel.state.repository.forksCount ?? 0)")
             Spacer()
         }
     }
@@ -99,15 +96,13 @@ struct ContributorsView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
-
-    let repository: Repository
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
     // MARK: Views
 
     var body: some View {
-        contentView(for: store.state.selectedRepositoryContributors)
-            .onAppear { self.store.send(.reloadContributors(self.repository)) }
+        contentView(for: viewModel.state.contributors)
+            .onAppear { self.viewModel.trigger(.reloadContributors) }
     }
 
     private func contentView(for contributors: [User]) -> some View {
@@ -134,25 +129,23 @@ struct IssuesView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
-
-    let repository: Repository
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
     // MARK: Views
 
     var body: some View {
         VStack {
-            ForEach(store.state.selectedRepositoryIssues) { issue in
+            ForEach(viewModel.state.issues) { issue in
                 NavigationLink(destination: self.destination(for: issue)) {
                     self.cell(for: issue)
                 }
             }
         }
-        .onAppear { self.store.send(.reloadIssues(self.repository)) }
+        .onAppear { self.viewModel.trigger(.reloadIssues) }
     }
 
     private func destination(for issue: Issue) -> some View {
-        IssueView(store: store, repository: repository, issue: issue)
+        IssueView(viewModel: viewModel, issue: issue)
     }
 
     private func cell(for issue: Issue) -> some View {
@@ -178,14 +171,13 @@ struct PullRequestsView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
-    let repository: Repository
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
     // MARK: Views
 
     var body: some View {
         VStack {
-            ForEach(store.state.selectedRepositoryPullRequests) { pullRequest in
+            ForEach(viewModel.state.pullRequests) { pullRequest in
                 self.cell(for: pullRequest)
             }
         }
@@ -207,11 +199,10 @@ struct PullRequestsView: View {
 
 struct LanguagesView: View {
 
-    @ObservedObject var store: AppStore
-    let repository: Repository
+    @ObservedObject var viewModel: ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>
 
     var body: some View {
-        let languages = store.state.selectedRepositoryLanguages
+        let languages = viewModel.state.languages
         let sortedKeys: [String] = languages.sorted { $0.value > $1.value }.map { $0.key }
         let totalLines = languages.reduce(0) { result, keyValue in result + keyValue.value }
 
@@ -234,6 +225,6 @@ struct LanguagesView: View {
     }
 
     private func load() {
-        store.send(.reloadLanguages(repository))
+        viewModel.trigger(.reloadLanguages)
     }
 }

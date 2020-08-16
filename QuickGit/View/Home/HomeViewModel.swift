@@ -9,17 +9,17 @@
 import Foundation
 import Combine
 
-class HomeViewModel: ViewModel<HomeViewModel.Input, Profile?> {
-    private unowned var store: AppStore
+class HomeViewModel: ViewModel<HomeViewModel.Input, HomeViewModel.State> {
+    private unowned var parentViewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State>
 
     private let gitHubService: GitHubService
     private var cancellables: Set<AnyCancellable> = .init()
 
-    init(store: AppStore, gitHubService: GitHubService) {
-        self.store = store
+    init(parentViewModel: ViewModel<LoginViewModel.Input, LoginViewModel.State>, gitHubService: GitHubService) {
+        self.parentViewModel = parentViewModel
         self.gitHubService = gitHubService
 
-        super.init(state: nil)
+        super.init(state: .init())
     }
     
     override func trigger(_ input: Input) {
@@ -27,19 +27,36 @@ class HomeViewModel: ViewModel<HomeViewModel.Input, Profile?> {
         case .reloadProfile:
             gitHubService.fetchProfile()
                 .ignoreFailure()
-                .sink { profile in
-                    self.state = profile
-                }
+                .sink { profile in self.state.profile = profile }
                 .store(in: &cancellables)
-        case .logout:
-            store.send(.logout)
+            
+        case .reloadRepositories:
+            gitHubService.fetchRepositories()
+                .ignoreFailure()
+                .sink { repositories in
+                    self.state.repositoryViewModels = repositories.map {
+                        RepositoryViewViewModel(repository: $0, gitHubService: self.gitHubService)
+                    }
+            }
+                .store(in: &cancellables)
+            case .logout:
+                parentViewModel.trigger(.logout)
         }
+    }
+}
+
+extension HomeViewModel {
+    struct State {
+        fileprivate(set) var profile: Profile? = nil
+        fileprivate(set) var repositoryViewModels: [ViewModel<RepositoryViewViewModel.Input, RepositoryViewViewModel.State>] = []
     }
 }
 
 extension HomeViewModel {
     enum Input {
         case reloadProfile
+        case reloadRepositories
+//        case openRepository(Repository)
         case logout
     }
 }
