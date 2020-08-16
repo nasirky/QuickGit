@@ -70,7 +70,7 @@ struct LoginView: View {
     // MARK: Helpers
 
     private func login(code: String) {
-        store.send(.login(code: code))
+        store.send(.login(code: code, store: store))
     }
 
 }

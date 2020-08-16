@@ -12,7 +12,7 @@ typealias AppStore = Store<AppState, AppAction>
 
 struct AppState {
 
-    var githubService: GitHubService?
+    fileprivate var githubService: GitHubService?
 
     var repositories = [Repository]()
 
@@ -23,20 +23,19 @@ struct AppState {
     var selectedRepositoryLanguages = [String: Int]()
 
     var selectedIssueComments = [IssueComment]()
-
     var isLoggedIn: Bool {
         githubService != nil
     }
 
+    var homeViewModel: ViewModel<HomeViewModel.Input, Profile?>?
 }
 
 enum AppAction {
 
-    case storedLogin
-    case login(code: String)
+    case storedLogin(store: AppStore)
+    case login(code: String, store: AppStore)
     case logout
 
-    case reloadProfile
     case reloadRepositories
     case reloadContributors(Repository)
     case reloadIssues(Repository)
@@ -56,28 +55,29 @@ extension Reducer where State == AppState, Action == AppAction {
 
         return Reducer { state, action in
             switch action {
-            case .storedLogin:
+            case let .storedLogin(store):
                 return loginService.storedLogin()
                     .map { information in
-                        Change { $0.githubService = DefaultGitHubService(information: information) }
+                        Change {
+                            let githubService = DefaultGitHubService(information: information)
+                            $0.githubService = githubService
+                            $0.homeViewModel = HomeViewModel(store: store, gitHubService: githubService)
+                        }
                     }
                     .ignoreFailure()
-            case let .login(code):
+            case let .login(code, store):
                 return loginService.login(code: code)
                     .map { information in
-                        Change { $0.githubService = DefaultGitHubService(information: information) }
+                        Change {
+                            let githubService = DefaultGitHubService(information: information)
+                            $0.githubService = githubService
+                            $0.homeViewModel = HomeViewModel(store: store, gitHubService: githubService)
+                        }
                     }
                     .ignoreFailure()
             case .logout:
                 loginService.logout()
                 return .just(Change { $0.githubService = nil })
-            case .reloadProfile:
-                guard let service = state.githubService else {
-                    return .empty()
-                }
-                return service.fetchProfile()
-                    .map { profile in Change { $0.profile = profile } }
-                    .ignoreFailure()
             case .reloadRepositories:
                 guard let service = state.githubService else {
                     return .empty()

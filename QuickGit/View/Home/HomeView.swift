@@ -21,6 +21,7 @@ struct HomeView: View {
     // MARK: Stored properties
 
     @ObservedObject var store: AppStore
+    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, Profile?>
 
     @State var selection = Tab.profile
 
@@ -35,7 +36,8 @@ struct HomeView: View {
     }
 
     private var profileTab: some View {
-        tab(ProfileView(store: store), tab: .profile) { isSelected in
+
+        return tab(ProfileView(viewModel: viewModel), tab: .profile) { isSelected in
             Image(systemName: isSelected ? "person.fill" : "person")
             Text("Profile")
         }

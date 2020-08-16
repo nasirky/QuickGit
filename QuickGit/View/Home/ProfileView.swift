@@ -13,7 +13,7 @@ struct ProfileView: View {
 
     // MARK: Stored properties
 
-    @ObservedObject var store: AppStore
+    @ObservedObject var viewModel: ViewModel<HomeViewModel.Input, Profile?>
     @State private var showLogoutAlert = false
 
     // MARK: Views
@@ -21,10 +21,9 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             Group {
-                store.state.profile
-                    .map(profileView)
+                viewModel.state.map(profileView)
             }
-            .onAppear { self.store.send(.reloadProfile) }
+            .onAppear { self.viewModel.trigger(.reloadProfile) }
             .navigationBarItems(leading: logoutButton, trailing: openInBrowserButton)
             .navigationBarTitle(Text(""), displayMode: .large)
         }
@@ -148,14 +147,15 @@ struct ProfileView: View {
     // MARK: Helpers
 
     private func logout() {
-        store.send(.logout)
+        viewModel.trigger(.logout)
     }
 
     private func openInBrowser() {
-        guard let url = store.state.profile.flatMap({ URL(string: $0.htmlURL) }) else {
-            return
-        }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        assertionFailure("Please adapt")
+//        guard let url = store.state.profile.flatMap({ URL(string: $0.htmlURL) }) else {
+//            return
+//        }
+//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
 }
