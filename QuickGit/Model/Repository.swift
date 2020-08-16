@@ -60,5 +60,4 @@ struct Repository: Codable, Identifiable {
 struct License: Codable {
     let key: String
     let name: String
-    let url: String
 }
