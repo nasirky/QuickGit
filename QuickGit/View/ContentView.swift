@@ -20,7 +20,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if store.state.isLoggedIn {
-                HomeView(store: store)
+                HomeView(store: store, viewModel: store.state.homeViewModel!)
             } else {
                 LoginView(store: store)
             }
@@ -32,7 +32,7 @@ struct ContentView: View {
     // MARK: Helpers
 
     private func storedLogin() {
-        store.send(.storedLogin)
+        store.send(.storedLogin(store: store))
     }
 
 }
